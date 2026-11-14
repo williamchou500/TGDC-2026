@@ -60,6 +60,7 @@ TagManager:
   - 49
   - 50
   - 51
+  - Selected
   layers:
   - Default
   - TransparentFX

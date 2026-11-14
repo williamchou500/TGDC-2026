@@ -14,7 +14,7 @@ public class PlayCards : MonoBehaviour
     public GameObject cardPrefabHalf;
     public List<int> cardTypes;
     private GameObject newCard;
-    private List<int> playerOneCards;
+    public List<int> playerOneCards;
     private List<int> playerTwoCards;
     private List<int> playerThreeCards;
     private List<int> playerFourCards;
@@ -22,9 +22,12 @@ public class PlayCards : MonoBehaviour
     private GameObject playerTwoHand;
     private GameObject playerThreeHand;
     private GameObject playerFourHand;
+    public List<int> selectedCards;
+    private GameObject selectedCardsContainer;
     private List<int> shuffled;
-    private int turn;
-
+    public int turn;
+    private bool turnInProgress;
+    private const int NUM_PLAYERS = 4;
 
     void Start()
     {
@@ -55,6 +58,21 @@ public class PlayCards : MonoBehaviour
         playerTwoHand = GameObject.FindWithTag("PlayerTwoHand");
         playerThreeHand = GameObject.FindWithTag("PlayerThreeHand");
         playerFourHand = GameObject.FindWithTag("PlayerFourHand");
+
+        selectedCards = new List<int> {};
+        selectedCardsContainer = GameObject.FindWithTag("Selected");
+
+        turn = 0;
+        turnInProgress = false;
+    }
+
+    void Update()
+    {
+        // if it isn't the player's turn
+        if (!turnInProgress && turn % NUM_PLAYERS != 0) {
+            turnInProgress = true;
+            Invoke(nameof(takeNPCTurn), 3f);
+        }
     }
 
     private void Shuffle(List<int> list)
@@ -76,6 +94,11 @@ public class PlayCards : MonoBehaviour
         for (int i = playerOneHand.transform.childCount - 1; i >= 0; i--)
         {
             Destroy(playerOneHand.transform.GetChild(i).gameObject);
+        }
+
+        for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
         }
 
         shuffled = cardIDs.ToList();
@@ -138,21 +161,80 @@ public class PlayCards : MonoBehaviour
 
     public void Player1PlayCards()
     {
-        
+        if (turn % NUM_PLAYERS == 0)
+        {
+            // do stuff with the cards
+
+            turn++;
+        }
     }
 
     public void Player2PlayCards()
     {
-        
+        Debug.Log("Char 1 turn");
     }
 
     public void Player3PlayCards()
     {
-        
+        Debug.Log("Char 2 turn");
+
     }
 
     public void Player4PlayCards()
     {
+        Debug.Log("Char 3 turn");
+
+    }
+
+    public void takeNPCTurn() {
+        // Character 1
+        if (turn % NUM_PLAYERS == 1) {
+            Player2PlayCards();
+        } 
+        // Character 2
+        else if (turn % NUM_PLAYERS == 2) {
+            Player3PlayCards();
+        }
+        // Character 3
+        else if (turn % NUM_PLAYERS == 3) {
+            Player4PlayCards();
+        }
+        turnInProgress = false;
+        turn++;
+    }
+
+    public void updatePlayerHand()
+    {
+        for (int i = playerOneHand.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(playerOneHand.transform.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < playerOneCards.Count(); i++)
+        {
+            if (playerOneCards.Count() > 39)
+            {
+                newCard = Instantiate(cardPrefabHalf, playerOneHand.transform);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(50,70);
+                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(65,10);
+
+            } else if (playerOneCards.Count() > 26)
+            {
+                newCard = Instantiate(cardPrefabTwoThirds, playerOneHand.transform);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(200/3,280/3);
+                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(47,10);
+            }
+            else
+            {
+                newCard = Instantiate(cardPrefab, playerOneHand.transform);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(100,140);
+                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(10,10);
+            }
+
+            newCard.name = cardNames[playerOneCards[i]].ToString();
+            newCard.tag = playerOneCards[i].ToString();
         
+            newCard.GetComponentInChildren<Text>().text = cardNames[playerOneCards[i]];
+        }   
     }
 }
