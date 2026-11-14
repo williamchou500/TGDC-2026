@@ -12,6 +12,7 @@ public class PlayCards : MonoBehaviour
     public GameObject cardPrefab;
     public GameObject cardPrefabTwoThirds;
     public GameObject cardPrefabHalf;
+    public List<int> cardTypes;
     private GameObject newCard;
     private List<int> playerOneCards;
     private List<int> playerTwoCards;
@@ -46,6 +47,9 @@ public class PlayCards : MonoBehaviour
         "Jack of Diamonds", "Jack of Clubs", "Jack of Hearts", "Jack of Spades", 
         "Queen of Diamonds", "Queen of Clubs", "Queen of Hearts", "Queen of Spades", 
         "King of Diamonds", "King of Clubs", "King of Hearts", "King of Spades"};
+
+        cardTypes = new List<int> {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 
+                                   7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12};
 
         playerOneHand = GameObject.FindWithTag("PlayerOneHand");
         playerTwoHand = GameObject.FindWithTag("PlayerTwoHand");

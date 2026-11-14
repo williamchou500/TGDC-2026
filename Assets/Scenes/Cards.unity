@@ -384,6 +384,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 6030272291879536365, guid: dc551851e186cc743822c22f1d3347d8, type: 3}
   cardPrefabTwoThirds: {fileID: 5706781431610026267, guid: 9dddb748651d1b443bde8f430118fdc9, type: 3}
   cardPrefabHalf: {fileID: 7666482888662862626, guid: 149b6f186d4c48545a93f38ef06a5ef8, type: 3}
+  cardTypes: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,6 +974,7 @@ RectTransform:
   m_Children:
   - {fileID: 1133320766}
   - {fileID: 1120213533}
+  - {fileID: 1963066688}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1235,6 +1237,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1901320859}
   m_CullTransparentMesh: 1
+--- !u!1 &1963066687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1963066688}
+  m_Layer: 5
+  m_Name: Discarded Cards
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1963066688
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963066687}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1386076267}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2109062214
 GameObject:
   m_ObjectHideFlags: 0
