@@ -250,9 +250,7 @@ public class PlayCards : MonoBehaviour
                 {
                     Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
                 }
-            }
-            
-            if (MakeDecision(2))
+            } else if (MakeDecision(3))
             {
                 if (CallBull())
                 {
@@ -264,7 +262,7 @@ public class PlayCards : MonoBehaviour
             }
         } else if (turn % NUM_PLAYERS == 2)
         {
-            if (MakeDecision(1))
+            if (MakeDecision(3))
             {
                 if (CallBull())
                 {
@@ -273,9 +271,7 @@ public class PlayCards : MonoBehaviour
                 {
                     Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
                 }
-            }
-            
-            if (MakeDecision(2))
+            } else if (MakeDecision(1))
             {
                 if (CallBull())
                 {
@@ -296,9 +292,7 @@ public class PlayCards : MonoBehaviour
                 {
                     Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
                 }
-            }
-            
-            if (MakeDecision(2))
+            } else if (MakeDecision(2))
             {
                 if (CallBull())
                 {
@@ -434,9 +428,7 @@ public class PlayCards : MonoBehaviour
             {
                 Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
             }
-        }
-        
-        if (MakeDecision(2))
+        } else if (MakeDecision(2))
         {
             if (CallBull())
             {
@@ -445,9 +437,7 @@ public class PlayCards : MonoBehaviour
             {
                 Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
             }
-        }
-        
-        if (MakeDecision(3))
+        } else if (MakeDecision(3))
         {
             if (CallBull())
             {
@@ -717,6 +707,39 @@ public class PlayCards : MonoBehaviour
         
         turn++;
         cardIDtoPlay = turn % 13;
+    }
+
+    public void Punish(int player)
+    {
+        if (player == 0)
+        {
+            playerOneCards.AddRange(discardedCards);
+            discardedCards = new List<int> {};
+            playerOneCards.Sort();
+
+            UpdatePlayerHand();
+        } else if (player == 1)
+        {
+            playerTwoCards.AddRange(discardedCards);
+            discardedCards = new List<int> {};
+            playerTwoCards.Sort();
+
+            playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
+        } else if (player == 2)
+        {
+            playerThreeCards.AddRange(discardedCards);
+            discardedCards = new List<int> {};
+            playerThreeCards.Sort();
+
+            playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
+        } else if (player == 3)
+        {
+            playerFourCards.AddRange(discardedCards);
+            discardedCards = new List<int> {};
+            playerFourCards.Sort();
+
+            playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
+        }
     }
 
     public void UpdatePlayerHand()
