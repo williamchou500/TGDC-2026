@@ -28,30 +28,33 @@ public class SelectCards : MonoBehaviour
 
     public void ClickCard()
     {
-        if (!isSelected & selectedCardsContainer.transform.childCount < 4)
+        if (cardsScript.turn % 4 == 0)
         {
-            gameObject.transform.SetParent(selectedCardsContainer.transform, false);
-            gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 100);
-            gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 140);
-            selectedCardTag = int.Parse(gameObject.tag);
-            cardsScript.playerOneCards.Remove(selectedCardTag);
-            cardsScript.selectedCards.Add(selectedCardTag);
-            cardsScript.selectedCards.Sort();
+            if (!isSelected & selectedCardsContainer.transform.childCount < 4)
+            {
+                gameObject.transform.SetParent(selectedCardsContainer.transform, false);
+                gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 100);
+                gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 140);
+                selectedCardTag = int.Parse(gameObject.tag);
+                cardsScript.playerOneCards.Remove(selectedCardTag);
+                cardsScript.selectedCards.Add(selectedCardTag);
+                cardsScript.selectedCards.Sort();
 
-            isSelected = true;
+                isSelected = true;
 
-            cardsScript.UpdatePlayerHand();
-        } else if (isSelected)
-        {
-            gameObject.transform.SetParent(playerHandContainer.transform, false);
-            selectedCardTag = int.Parse(gameObject.tag);
-            cardsScript.playerOneCards.Add(selectedCardTag);
-            cardsScript.selectedCards.Remove(selectedCardTag);
-            cardsScript.playerOneCards.Sort();
+                cardsScript.UpdatePlayerHand();
+            } else if (isSelected)
+            {
+                gameObject.transform.SetParent(playerHandContainer.transform, false);
+                selectedCardTag = int.Parse(gameObject.tag);
+                cardsScript.playerOneCards.Add(selectedCardTag);
+                cardsScript.selectedCards.Remove(selectedCardTag);
+                cardsScript.playerOneCards.Sort();
 
-            isSelected = false;
+                isSelected = false;
 
-            cardsScript.UpdatePlayerHand();
+                cardsScript.UpdatePlayerHand();
+            }
         }
     }
 }

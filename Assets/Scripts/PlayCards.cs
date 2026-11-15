@@ -430,35 +430,6 @@ public class PlayCards : MonoBehaviour
             Debug.Log("NOT YOUR TURN");
             return;
         }
-        
-        if (MakeDecision(1))
-        {
-            if (CallBull())
-            {
-                Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
-            } else
-            {
-                Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
-            }
-        } else if (MakeDecision(2))
-        {
-            if (CallBull())
-            {
-                Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
-            } else
-            {
-                Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
-            }
-        } else if (MakeDecision(3))
-        {
-            if (CallBull())
-            {
-                Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
-            } else
-            {
-                Debug.Log("PLAYER 4 CALLED BS AND WAS WRONG");
-            }
-        }
 
         for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
             {
@@ -466,7 +437,41 @@ public class PlayCards : MonoBehaviour
         }
 
         discardedCards.AddRange(selectedCards);
-        selectedCards.Clear();
+        
+        if (MakeDecision(1))
+        {
+            if (CallBull())
+            {
+                Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
+                Punish(0);
+            } else
+            {
+                Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
+                Punish(1);
+            }
+        } else if (MakeDecision(2))
+        {
+            if (CallBull())
+            {
+                Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
+                Punish(0);
+            } else
+            {
+                Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
+                Punish(2);
+            }
+        } else if (MakeDecision(3))
+        {
+            if (CallBull())
+            {
+                Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
+                Punish(0);
+            } else
+            {
+                Debug.Log("PLAYER 4 CALLED BS AND WAS WRONG");
+                Punish(3);
+            }
+        }
 
         NextTurn(true);
     }
@@ -715,6 +720,30 @@ public class PlayCards : MonoBehaviour
         {
             turnInProgress = true;
             Debug.Log("Player 1 Turn");
+        }
+
+        if (turn % NUM_PLAYERS == 0 & playerOneCards.Count() == 0)
+        {
+            Debug.Log("Player 1 WINS");
+            return;
+        }
+
+        if (turn % NUM_PLAYERS == 1 & playerTwoCards.Count() == 0)
+        {
+            Debug.Log("Player 2 WINS");
+            return;
+        }
+
+        if (turn % NUM_PLAYERS == 2 & playerThreeCards.Count() == 0)
+        {
+            Debug.Log("Player 3 WINS");
+            return;
+        }
+
+        if (turn % NUM_PLAYERS == 3 & playerFourCards.Count() == 0)
+        {
+            Debug.Log("Player 4 WINS");
+            return;
         }
         
         turn++;
