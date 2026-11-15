@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayCards : MonoBehaviour
 {
@@ -78,8 +79,7 @@ public class PlayCards : MonoBehaviour
     {
         // if it isn't the player's turn
         if (!turnInProgress && turn % NUM_PLAYERS != 0) {
-            turnInProgress = true;
-            Invoke(nameof(takeNPCTurn), 3f);
+            Invoke(nameof(takeNPCTurn), 0.25f);
         }
     }
 
@@ -117,6 +117,9 @@ public class PlayCards : MonoBehaviour
         }
 
         discardedCards = new List<int> {};
+
+        turn = 0;
+        cardIDtoPlay = 0;
 
         shuffled = cardIDs.ToList();
         
@@ -170,7 +173,7 @@ public class PlayCards : MonoBehaviour
         }
     }
 
-    public void CallBull(bool PlayerOneCalled = false)
+    public bool CallBull(bool PlayerOneCalled = false)
     {
         // this just checks if the discard tiles are bull or not
         // we can probably make this return true or false and the use the turn number to find out who to punish
@@ -180,6 +183,15 @@ public class PlayCards : MonoBehaviour
         Debug.Log(String.Join(",", selectedCards)); 
         Debug.Log(cardIDtoPlay);
 
+        if (PlayerOneCalled & selectedCards.Count() == 0)
+        {
+            Debug.Log("no cards in selectedCards");
+            // REMOVE THE NEXT TURN CALL HERE, DO NOT PROGRESS TO THE NEXT TURN IF NO CARDS HAVE BEEN SELECTED/DISCARDED BY NPC
+            // THIS IS HERE JUST FOR TESTING 
+            NextTurn(true);
+            return false;
+        }
+
         for (int i = 0; i < selectedCards.Count(); i++)
         {
             Debug.Log(cardTypes[selectedCards[i]]);
@@ -187,28 +199,55 @@ public class PlayCards : MonoBehaviour
             {
                 if (PlayerOneCalled)
                 {
-                    Debug.Log("Player 1");
-                    // just slap the function to punish p1 here
+                    Debug.Log("Player 1 wrong");
+                    // punish p1
+                    NextTurn(true);
                 }
                 Debug.Log("BULLLLLLLLLLL");
                 // run function here for the punishment
-                return;
+                return true;
+
             }
         }
+
+        if (PlayerOneCalled)
+        {
+            Debug.Log("Player 1 right");
+            // punish the npc who bsed   
+            NextTurn(true);
+        } 
+
         Debug.Log("not bull");
+        return false;
+
+    }
+
+    public void CallBullButton()
+    {
+        CallBull(true);
     }
 
     public void MakeDecision(int player)
     {
+        // add the decisionmaking and probability stuff
         if (player == 1)
         {
-            
+            if (CallBull())
+            {
+                Debug.Log("Player dies");
+            }
         } else if (player == 2)
         {
-            
+            if (CallBull())
+            {
+                Debug.Log("Player dies");
+            }
         } else if (player == 3)
         {
-            
+            if (CallBull())
+            {
+                Debug.Log("Player dies");
+            }
         }
     }
 
@@ -216,31 +255,61 @@ public class PlayCards : MonoBehaviour
     {
         if (turn % NUM_PLAYERS == 0)
         {
+            MakeDecision(1);
+            MakeDecision(2);
+            MakeDecision(3);
+
             for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
             {
                 selectedCardsContainer.transform.GetChild(i).SetParent(discardedCardsContainer.transform, false);
-                discardedCards = new List<int> (selectedCards);
-                selectedCards = new List<int> {}; 
             }
+
+            discardedCards.AddRange(selectedCards);
+            selectedCards.Clear();
         }
 
-        NextTurn();
+        NextTurn(true);
     }
 
     public void Player2PlayCards()
     {
-        Debug.Log("Char 1 turn");
+        if (!turnInProgress)
+        {
+            for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
+            }
+
+            Debug.Log("Char 1 turn");   
+            turnInProgress = true;
+        }
     }
 
     public void Player3PlayCards()
     {
-        Debug.Log("Char 2 turn");
+        if (!turnInProgress)
+        {
+            for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
+            }
+            Debug.Log("Char 2 turn");   
+            turnInProgress = true;
+        }
 
     }
 
     public void Player4PlayCards()
     {
-        Debug.Log("Char 3 turn");
+        if (!turnInProgress)
+        {
+            for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
+            }
+            Debug.Log("Char 3 turn");   
+            turnInProgress = true;
+        }
 
     }
 
@@ -257,14 +326,18 @@ public class PlayCards : MonoBehaviour
         else if (turn % NUM_PLAYERS == 3) {
             Player4PlayCards();
         }
-        turnInProgress = false;
-        turn++;
-        cardIDtoPlay = turn % 13;
     }
 
-    public void NextTurn()
+    public void NextTurn(bool isPlayerOne = false)
     {
-        turnInProgress = false;
+        if (isPlayerOne & turn % NUM_PLAYERS != 3) 
+        {
+            turnInProgress = false;
+        } else if (isPlayerOne & turn % NUM_PLAYERS == 3)
+        {
+            Debug.Log("Player 1 Turn");
+        }
+        
         turn++;
         cardIDtoPlay = turn % 13;
     }

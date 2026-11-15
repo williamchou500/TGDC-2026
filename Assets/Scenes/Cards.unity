@@ -286,14 +286,14 @@ MonoBehaviour:
       - m_Target: {fileID: 547371190}
         m_TargetAssemblyTypeName: PlayCards, Assembly-CSharp
         m_MethodName: NextTurn
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &190940346
 MonoBehaviour:
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b05f086ce0a0b0428e6afd7dfca331f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Cards
+  m_EditorClassIdentifier: Assembly-CSharp::PlayCards
   cardPrefab: {fileID: 6030272291879536365, guid: dc551851e186cc743822c22f1d3347d8, type: 3}
   cardPrefabTwoThirds: {fileID: 5706781431610026267, guid: 9dddb748651d1b443bde8f430118fdc9, type: 3}
   cardPrefabHalf: {fileID: 7666482888662862626, guid: 149b6f186d4c48545a93f38ef06a5ef8, type: 3}
@@ -818,7 +818,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 547371190}
         m_TargetAssemblyTypeName: PlayCards, Assembly-CSharp
-        m_MethodName: CallBull
+        m_MethodName: CallBullButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1372,7 +1372,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 547371190}
-        m_TargetAssemblyTypeName: Cards, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayCards, Assembly-CSharp
         m_MethodName: LoadCards
         m_Mode: 1
         m_Arguments:
