@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class PlayCards : MonoBehaviour
 {
+    private List<int> discardedCards;
     private List<int> cardIDs;
+    private int cardIDtoPlay;
     private List<string> cardNames;
     public GameObject cardPrefab;
     public GameObject cardPrefabTwoThirds;
@@ -63,6 +65,7 @@ public class PlayCards : MonoBehaviour
         selectedCardsContainer = GameObject.FindWithTag("Selected");
 
         turn = 0;
+        cardIDtoPlay = 0;
         turnInProgress = false;
     }
 
@@ -153,10 +156,46 @@ public class PlayCards : MonoBehaviour
         }
     }
 
-    public void CallBull()
+    public void CallBull(bool PlayerOneCalled = false)
     {
-        // can make this universal work for all players
-        // decide who to punish based on whose turn it was
+        // this just checks if the discard tiles are bull or not
+        // we can probably make this return true or false and the use the turn number to find out who to punish
+
+        cardIDtoPlay = turn % 13;
+
+        Debug.Log(String.Join(",", selectedCards)); 
+        Debug.Log(cardIDtoPlay);
+
+        for (int i = 0; i < selectedCards.Count(); i++)
+        {
+            Debug.Log(cardTypes[selectedCards[i]]);
+            if (cardTypes[selectedCards[i]] != cardIDtoPlay)
+            {
+                if (PlayerOneCalled)
+                {
+                    Debug.Log("Player 1");
+                    // just slap the function to punish p1 here
+                }
+                Debug.Log("BULLLLLLLLLLL");
+                // run function here for the punishment
+                return;
+            }
+        }
+        Debug.Log("not bull");
+    }
+
+    public void MakeDecision(string player)
+    {
+        if (player == "Player 2")
+        {
+            
+        } else if (player == "Player 3")
+        {
+            
+        } else if (player == "Player 4")
+        {
+            
+        }
     }
 
     public void Player1PlayCards()
@@ -166,6 +205,7 @@ public class PlayCards : MonoBehaviour
             // do stuff with the cards
 
             turn++;
+            cardIDtoPlay = turn % 13;
         }
     }
 
@@ -201,6 +241,7 @@ public class PlayCards : MonoBehaviour
         }
         turnInProgress = false;
         turn++;
+        cardIDtoPlay = turn % 13;
     }
 
     public void updatePlayerHand()
