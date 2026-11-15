@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using System.Data;
 
 public class PlayCards : MonoBehaviour
 {
@@ -287,10 +288,6 @@ public class PlayCards : MonoBehaviour
         discardedCards.AddRange(selectedCards);
         selectedCards.Clear();
 
-        Debug.Log("yoooo");
-
-        Debug.Log("hi");
-
         NextTurn(true);
     }
 
@@ -303,7 +300,47 @@ public class PlayCards : MonoBehaviour
                 Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
             }
 
-            Debug.Log("Char 1 turn");   
+            Debug.Log("Char 1 turn");
+
+            List<int> validDiscards = new List<int> {};
+
+            for (int i = playerTwoCards.Count() - 1; i >= 0; i--)
+            {
+                if (cardTypes[playerTwoCards[i]] == cardIDtoPlay)
+                {
+                    validDiscards.Add(playerTwoCards[i]);
+                    playerTwoCards.Remove(playerTwoCards[i]);
+                }
+            }
+
+            if (validDiscards.Count() > 0)
+            {
+                discardedCards.AddRange(validDiscards);
+                selectedCards.AddRange(validDiscards);
+
+                for (int i = 0; i < validDiscards.Count(); i++)
+                {
+                    newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+                    newCard.name = cardNames[validDiscards[i]].ToString();
+                    newCard.tag = validDiscards[i].ToString();       
+
+                    newCard.GetComponentInChildren<Text>().text = cardNames[validDiscards[i]];
+                }        
+            } else
+            {
+                int randomIndex = UnityEngine.Random.Range(0, playerTwoCards.Count);
+                discardedCards.Add(playerTwoCards[randomIndex]);
+                selectedCards.Add(playerTwoCards[randomIndex]);
+                playerTwoCards.Remove(playerTwoCards[randomIndex]);
+
+                newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+                newCard.name = cardNames[discardedCards[^1]].ToString();
+                newCard.tag = discardedCards[^1].ToString();     
+
+                newCard.GetComponentInChildren<Text>().text = cardNames[discardedCards[^1]];
+            }
+            playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
+
             turnInProgress = true;
         }
     }
@@ -317,6 +354,46 @@ public class PlayCards : MonoBehaviour
                 Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
             }
             Debug.Log("Char 2 turn");   
+
+            List<int> validDiscards = new List<int> {};
+
+            for (int i = playerThreeCards.Count() - 1; i == 0; i--)
+            {
+                if (cardTypes[playerThreeCards[i]] == cardIDtoPlay)
+                {
+                    validDiscards.Add(playerThreeCards[i]);
+                    playerTwoCards.Remove(playerThreeCards[i]);
+                }
+            }
+
+            if (validDiscards.Count() > 0)
+            {
+                discardedCards.AddRange(validDiscards);
+                selectedCards.AddRange(validDiscards);
+
+                for (int i = 0; i < validDiscards.Count(); i++)
+                {
+                    newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+                    newCard.name = cardNames[validDiscards[i]].ToString();
+                    newCard.tag = validDiscards[i].ToString();       
+
+                    newCard.GetComponentInChildren<Text>().text = cardNames[validDiscards[i]];
+                }
+            } else
+            {
+                int randomIndex = UnityEngine.Random.Range(0, playerThreeCards.Count);
+                discardedCards.Add(playerThreeCards[randomIndex]);
+                selectedCards.Add(playerThreeCards[randomIndex]);
+                playerThreeCards.Remove(playerThreeCards[randomIndex]);
+
+                newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+                newCard.name = cardNames[discardedCards[^1]].ToString();
+                newCard.tag = discardedCards[^1].ToString();     
+
+                newCard.GetComponentInChildren<Text>().text = cardNames[discardedCards[^1]];
+            }
+            playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
+
             turnInProgress = true;
         }
 
@@ -331,6 +408,47 @@ public class PlayCards : MonoBehaviour
                 Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
             }
             Debug.Log("Char 3 turn");   
+            
+            List<int> validDiscards = new List<int> {};
+
+            for (int i = playerFourCards.Count() - 1; i == 0; i--)
+            {
+                if (cardTypes[playerFourCards[i]] == cardIDtoPlay)
+                {
+                    validDiscards.Add(playerFourCards[i]);
+                    playerTwoCards.Remove(playerFourCards[i]);
+                }
+            }
+
+            if (validDiscards.Count() > 0)
+            {
+                discardedCards.AddRange(validDiscards);
+                selectedCards.AddRange(validDiscards);
+
+                for (int i = 0; i < validDiscards.Count(); i++)
+                {
+                    newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+                    newCard.name = cardNames[validDiscards[i]].ToString();
+                    newCard.tag = validDiscards[i].ToString();       
+
+                    newCard.GetComponentInChildren<Text>().text = cardNames[validDiscards[i]];
+                }        
+            } else
+            {
+                int randomIndex = UnityEngine.Random.Range(0, playerFourCards.Count);
+                discardedCards.Add(playerFourCards[randomIndex]);
+                selectedCards.Add(playerFourCards[randomIndex]);
+                playerFourCards.Remove(playerFourCards[randomIndex]);
+
+                newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+                newCard.name = cardNames[discardedCards[^1]].ToString();
+                newCard.tag = discardedCards[^1].ToString();     
+
+                newCard.GetComponentInChildren<Text>().text = cardNames[discardedCards[^1]];
+            }
+
+            playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
+
             turnInProgress = true;
         }
 
@@ -353,9 +471,21 @@ public class PlayCards : MonoBehaviour
 
     public void NextTurn(bool isPlayerOne = false)
     {
-        Debug.Log("turn" + turn.ToString());
-        Debug.Log("modulo" + (turn % NUM_PLAYERS).ToString());
-        Debug.Log("NEXT TURN");
+        for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
+        }
+
+        selectedCards = new List<int> {};
+
+        for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
+        }
+
+        selectedCards = new List<int> {};
+        discardedCards = new List<int> {};
+
         if (turn % NUM_PLAYERS != 3) 
         {
             Debug.Log("A");
@@ -403,5 +533,9 @@ public class PlayCards : MonoBehaviour
         
             newCard.GetComponentInChildren<Text>().text = cardNames[playerOneCards[i]];
         }   
+
+        playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
+        playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
+        playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
     }
 }
