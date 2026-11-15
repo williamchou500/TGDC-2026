@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class PlayCards : MonoBehaviour
 {
-    private List<int> discardedCards;
     private List<int> cardIDs;
     private int cardIDtoPlay;
     private List<string> cardNames;
@@ -15,6 +14,8 @@ public class PlayCards : MonoBehaviour
     public GameObject cardPrefabTwoThirds;
     public GameObject cardPrefabHalf;
     public List<int> cardTypes;
+    private List<int> discardedCards;
+    private GameObject discardedCardsContainer;
     private GameObject newCard;
     public List<int> playerOneCards;
     private List<int> playerTwoCards;
@@ -56,6 +57,9 @@ public class PlayCards : MonoBehaviour
         cardTypes = new List<int> {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 
                                    7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12};
 
+        discardedCardsContainer = GameObject.FindWithTag("Discarded");
+        discardedCards = new List<int> {};
+
         playerOneHand = GameObject.FindWithTag("PlayerOneHand");
         playerTwoHand = GameObject.FindWithTag("PlayerTwoHand");
         playerThreeHand = GameObject.FindWithTag("PlayerThreeHand");
@@ -63,6 +67,7 @@ public class PlayCards : MonoBehaviour
 
         selectedCards = new List<int> {};
         selectedCardsContainer = GameObject.FindWithTag("Selected");
+
 
         turn = 0;
         cardIDtoPlay = 0;
@@ -103,6 +108,15 @@ public class PlayCards : MonoBehaviour
         {
             Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
         }
+
+        selectedCards = new List<int> {};
+
+        for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
+        }
+
+        discardedCards = new List<int> {};
 
         shuffled = cardIDs.ToList();
         
@@ -184,15 +198,15 @@ public class PlayCards : MonoBehaviour
         Debug.Log("not bull");
     }
 
-    public void MakeDecision(string player)
+    public void MakeDecision(int player)
     {
-        if (player == "Player 2")
+        if (player == 1)
         {
             
-        } else if (player == "Player 3")
+        } else if (player == 2)
         {
             
-        } else if (player == "Player 4")
+        } else if (player == 3)
         {
             
         }
@@ -202,11 +216,15 @@ public class PlayCards : MonoBehaviour
     {
         if (turn % NUM_PLAYERS == 0)
         {
-            // do stuff with the cards
-
-            turn++;
-            cardIDtoPlay = turn % 13;
+            for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
+            {
+                selectedCardsContainer.transform.GetChild(i).SetParent(discardedCardsContainer.transform, false);
+                discardedCards = new List<int> (selectedCards);
+                selectedCards = new List<int> {}; 
+            }
         }
+
+        NextTurn();
     }
 
     public void Player2PlayCards()
@@ -244,7 +262,14 @@ public class PlayCards : MonoBehaviour
         cardIDtoPlay = turn % 13;
     }
 
-    public void updatePlayerHand()
+    public void NextTurn()
+    {
+        turnInProgress = false;
+        turn++;
+        cardIDtoPlay = turn % 13;
+    }
+
+    public void UpdatePlayerHand()
     {
         for (int i = playerOneHand.transform.childCount - 1; i >= 0; i--)
         {

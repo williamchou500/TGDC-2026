@@ -61,6 +61,7 @@ TagManager:
   - 50
   - 51
   - Selected
+  - Discarded
   layers:
   - Default
   - TransparentFX

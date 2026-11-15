@@ -40,7 +40,7 @@ public class SelectCards : MonoBehaviour
 
             isSelected = true;
 
-            cardsScript.updatePlayerHand();
+            cardsScript.UpdatePlayerHand();
         } else if (isSelected)
         {
             gameObject.transform.SetParent(playerHandContainer.transform, false);
@@ -51,7 +51,7 @@ public class SelectCards : MonoBehaviour
 
             isSelected = false;
 
-            cardsScript.updatePlayerHand();
+            cardsScript.UpdatePlayerHand();
         }
     }
 }
