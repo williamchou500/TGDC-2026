@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class PlayCards : MonoBehaviour
 {
@@ -76,10 +77,15 @@ public class PlayCards : MonoBehaviour
     }
 
     void Update()
-    {
+    {   
+        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            Debug.Log("Space pressed");
+        }
+
         // if it isn't the player's turn
         if (!turnInProgress && turn % NUM_PLAYERS != 0) {
-            Invoke(nameof(takeNPCTurn), 0.25f);
+            Invoke(nameof(takeNPCTurn), 0f);
         }
     }
 
@@ -224,7 +230,14 @@ public class PlayCards : MonoBehaviour
 
     public void CallBullButton()
     {
+        if (!turnInProgress || turn % NUM_PLAYERS == 0) return;
         CallBull(true);
+    }
+
+    public void PassButton()
+    {
+        if (!turnInProgress || turn % NUM_PLAYERS == 0) return;
+        NextTurn(true);
     }
 
     public void MakeDecision(int player)
@@ -253,20 +266,30 @@ public class PlayCards : MonoBehaviour
 
     public void Player1PlayCards()
     {
-        if (turn % NUM_PLAYERS == 0)
+        Debug.Log("Player1PlayCards called. Turn = " + turn);
+        Debug.Log("Turn modulo = " + turn % NUM_PLAYERS);
+
+        if (turn % NUM_PLAYERS != 0)
         {
-            MakeDecision(1);
-            MakeDecision(2);
-            MakeDecision(3);
-
-            for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
-            {
-                selectedCardsContainer.transform.GetChild(i).SetParent(discardedCardsContainer.transform, false);
-            }
-
-            discardedCards.AddRange(selectedCards);
-            selectedCards.Clear();
+            Debug.Log("NOT YOUR TURN");
+            return;
         }
+        
+        MakeDecision(1);
+        MakeDecision(2);
+        MakeDecision(3);
+
+        for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
+            {
+            selectedCardsContainer.transform.GetChild(i).SetParent(discardedCardsContainer.transform, false);
+        }
+
+        discardedCards.AddRange(selectedCards);
+        selectedCards.Clear();
+
+        Debug.Log("yoooo");
+
+        Debug.Log("hi");
 
         NextTurn(true);
     }
@@ -330,11 +353,16 @@ public class PlayCards : MonoBehaviour
 
     public void NextTurn(bool isPlayerOne = false)
     {
-        if (isPlayerOne & turn % NUM_PLAYERS != 3) 
+        Debug.Log("turn" + turn.ToString());
+        Debug.Log("modulo" + (turn % NUM_PLAYERS).ToString());
+        Debug.Log("NEXT TURN");
+        if (turn % NUM_PLAYERS != 3) 
         {
+            Debug.Log("A");
             turnInProgress = false;
-        } else if (isPlayerOne & turn % NUM_PLAYERS == 3)
+        } else if (turn % NUM_PLAYERS == 3)
         {
+            turnInProgress = true;
             Debug.Log("Player 1 Turn");
         }
         

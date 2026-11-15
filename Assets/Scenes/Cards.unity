@@ -285,8 +285,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 547371190}
         m_TargetAssemblyTypeName: PlayCards, Assembly-CSharp
-        m_MethodName: NextTurn
-        m_Mode: 6
+        m_MethodName: PassButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
