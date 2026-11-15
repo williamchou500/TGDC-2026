@@ -206,12 +206,12 @@ public class PlayCards : MonoBehaviour
             {
                 if (PlayerOneCalled)
                 {
-                    Debug.Log("Player 1 wrong");
-                    // punish p1
+                    Debug.Log("Player 1 right");
+                    Punish(turn % NUM_PLAYERS);
                     NextTurn(true);
+                    return true;
                 }
                 Debug.Log("BULLLLLLLLLLL");
-                // run function here for the punishment
                 return true;
 
             }
@@ -219,8 +219,8 @@ public class PlayCards : MonoBehaviour
 
         if (PlayerOneCalled)
         {
-            Debug.Log("Player 1 right");
-            // punish the npc who bsed   
+            Debug.Log("Player 1 wrong");
+            Punish(0);   
             NextTurn(true);
         } 
 
@@ -246,18 +246,22 @@ public class PlayCards : MonoBehaviour
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
+                    Punish(1);
                 } else
                 {
                     Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
+                    Punish(2);
                 }
             } else if (MakeDecision(3))
             {
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
+                    Punish(1);
                 } else
                 {
                     Debug.Log("PLAYER 4 CALLED BS AND WAS WRONG");
+                    Punish(3);
                 }
             }
         } else if (turn % NUM_PLAYERS == 2)
@@ -267,18 +271,22 @@ public class PlayCards : MonoBehaviour
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
+                    Punish(2);
                 } else
                 {
                     Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
+                    Punish(3);
                 }
             } else if (MakeDecision(1))
             {
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
+                    Punish(2);
                 } else
                 {
                     Debug.Log("PLAYER 4 CALLED BS AND WAS WRONG");
+                    Punish(1);
                 }
             }
         } else if (turn % NUM_PLAYERS == 3)
@@ -288,18 +296,22 @@ public class PlayCards : MonoBehaviour
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
+                    Punish(3);
                 } else
                 {
                     Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
+                    Punish(1);
                 }
             } else if (MakeDecision(2))
             {
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
+                    Punish(3);
                 } else
                 {
                     Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
+                    Punish(2);
                 }
             }
         }
@@ -474,7 +486,7 @@ public class PlayCards : MonoBehaviour
                 Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
             }
 
-            discardedCards = new List<int> {};
+            discardedCards.AddRange(selectedCards);
             selectedCards = new List<int> {};
 
             Debug.Log("Char 1 turn");
@@ -528,7 +540,7 @@ public class PlayCards : MonoBehaviour
                 Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
             }
 
-            discardedCards = new List<int> {};
+            discardedCards.AddRange(selectedCards);
             selectedCards = new List<int> {};
 
             Debug.Log("Char 2 turn");   
@@ -622,7 +634,7 @@ public class PlayCards : MonoBehaviour
                 Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
             }
 
-            discardedCards = new List<int> {};
+            discardedCards.AddRange(selectedCards);
             selectedCards = new List<int> {};
 
             Debug.Log("Char 3 turn");   
@@ -713,6 +725,7 @@ public class PlayCards : MonoBehaviour
     {
         if (player == 0)
         {
+            Debug.Log("Punish 0");
             playerOneCards.AddRange(discardedCards);
             discardedCards = new List<int> {};
             playerOneCards.Sort();
