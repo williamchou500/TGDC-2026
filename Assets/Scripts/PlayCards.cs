@@ -238,31 +238,161 @@ public class PlayCards : MonoBehaviour
     public void PassButton()
     {
         if (!turnInProgress || turn % NUM_PLAYERS == 0) return;
+
+        if (turn % NUM_PLAYERS == 1)
+        {
+            if (MakeDecision(2))
+            {
+                if (CallBull())
+                {
+                    Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
+                } else
+                {
+                    Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
+                }
+            }
+            
+            if (MakeDecision(2))
+            {
+                if (CallBull())
+                {
+                    Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
+                } else
+                {
+                    Debug.Log("PLAYER 4 CALLED BS AND WAS WRONG");
+                }
+            }
+        } else if (turn % NUM_PLAYERS == 2)
+        {
+            if (MakeDecision(1))
+            {
+                if (CallBull())
+                {
+                    Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
+                } else
+                {
+                    Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
+                }
+            }
+            
+            if (MakeDecision(2))
+            {
+                if (CallBull())
+                {
+                    Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
+                } else
+                {
+                    Debug.Log("PLAYER 4 CALLED BS AND WAS WRONG");
+                }
+            }
+        } else if (turn % NUM_PLAYERS == 3)
+        {
+            if (MakeDecision(1))
+            {
+                if (CallBull())
+                {
+                    Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
+                } else
+                {
+                    Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
+                }
+            }
+            
+            if (MakeDecision(2))
+            {
+                if (CallBull())
+                {
+                    Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
+                } else
+                {
+                    Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
+                }
+            }
+        }
+
         NextTurn(true);
     }
 
-    public void MakeDecision(int player)
+    public bool MakeDecision(int player)
     {
+        // output of true means they call bull and false means they don't
+        // if (MakeDecision(1)) {if CallBull{ Punishment(0) }}
         // add the decisionmaking and probability stuff
         if (player == 1)
         {
-            if (CallBull())
+            int numOfType = 0;
+
+            for (int i = 0; i < playerTwoCards.Count(); i++) {
+                if (cardTypes[playerTwoCards[i]] == cardIDtoPlay)
+                {
+                    numOfType++;
+                }
+            }
+
+            if (numOfType + selectedCards.Count() > 4)
             {
-                Debug.Log("Player dies");
+                return true;
+            } else
+            {
+                return false;
             }
         } else if (player == 2)
         {
-            if (CallBull())
+            int numOfType = 0;
+
+            for (int i = 0; i < playerTwoCards.Count(); i++) {
+                if (cardTypes[playerTwoCards[i]] == cardIDtoPlay)
+                {
+                    numOfType++;
+                }
+            }
+
+            if (numOfType + selectedCards.Count() > 4)
             {
-                Debug.Log("Player dies");
+                return true;
+            } else if (numOfType + selectedCards.Count() > 3)
+            {
+                if (UnityEngine.Random.value < 0.8)
+                {
+                    return true;
+                }
+            } else if (numOfType + selectedCards.Count() > 2)
+            {
+                if (UnityEngine.Random.value < 0.6)
+                {
+                    return true;
+                }
+            } else if (numOfType + selectedCards.Count() > 1)
+            {
+                if (UnityEngine.Random.value < 0.3)
+                {
+                    return true;
+                }
+            } else
+            {
+                if (UnityEngine.Random.value < 0.1)
+                {
+                    return true;
+                }
             }
         } else if (player == 3)
         {
-            if (CallBull())
+            int numOfType = 0;
+
+            for (int i = 0; i < playerTwoCards.Count(); i++) {
+                if (cardTypes[playerTwoCards[i]] == cardIDtoPlay)
+                {
+                    numOfType++;
+                }
+            }
+
+            if (numOfType + selectedCards.Count() > 4)
             {
-                Debug.Log("Player dies");
+                return true;
             }
         }
+
+        return false;
     }
 
     public void SelectRandomCard(List<int> playerNumberCards)
@@ -295,9 +425,38 @@ public class PlayCards : MonoBehaviour
             return;
         }
         
-        MakeDecision(1);
-        MakeDecision(2);
-        MakeDecision(3);
+        if (MakeDecision(1))
+        {
+            if (CallBull())
+            {
+                Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
+            } else
+            {
+                Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
+            }
+        }
+        
+        if (MakeDecision(2))
+        {
+            if (CallBull())
+            {
+                Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
+            } else
+            {
+                Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
+            }
+        }
+        
+        if (MakeDecision(3))
+        {
+            if (CallBull())
+            {
+                Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
+            } else
+            {
+                Debug.Log("PLAYER 4 CALLED BS AND WAS WRONG");
+            }
+        }
 
         for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
             {
@@ -319,6 +478,14 @@ public class PlayCards : MonoBehaviour
             {
                 Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
             }
+
+            for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
+            }
+
+            discardedCards = new List<int> {};
+            selectedCards = new List<int> {};
 
             Debug.Log("Char 1 turn");
 
@@ -365,6 +532,15 @@ public class PlayCards : MonoBehaviour
             {
                 Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
             }
+
+            for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
+            }
+
+            discardedCards = new List<int> {};
+            selectedCards = new List<int> {};
+
             Debug.Log("Char 2 turn");   
 
             List<int> validDiscards = new List<int> {};
@@ -450,6 +626,15 @@ public class PlayCards : MonoBehaviour
             {
                 Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
             }
+
+            for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
+            }
+
+            discardedCards = new List<int> {};
+            selectedCards = new List<int> {};
+
             Debug.Log("Char 3 turn");   
             
             List<int> validDiscards = new List<int> {};
