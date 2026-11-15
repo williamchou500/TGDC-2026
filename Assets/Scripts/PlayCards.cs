@@ -265,6 +265,25 @@ public class PlayCards : MonoBehaviour
         }
     }
 
+    public void SelectRandomCard(List<int> playerNumberCards)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, playerNumberCards.Count);
+        discardedCards.Add(playerNumberCards[randomIndex]);
+        selectedCards.Add(playerNumberCards[randomIndex]);
+        playerNumberCards.Remove(playerNumberCards[randomIndex]);
+    }
+
+    public void PlayRandomCard(List<int> playerNumberCards)
+    {
+        SelectRandomCard(playerNumberCards);
+
+        newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+        newCard.name = cardNames[discardedCards[^1]].ToString();
+        newCard.tag = discardedCards[^1].ToString();     
+
+        newCard.GetComponentInChildren<Text>().text = cardNames[discardedCards[^1]];
+    }
+
     public void Player1PlayCards()
     {
         Debug.Log("Player1PlayCards called. Turn = " + turn);
@@ -291,6 +310,7 @@ public class PlayCards : MonoBehaviour
         NextTurn(true);
     }
 
+    // Timid Character
     public void Player2PlayCards()
     {
         if (!turnInProgress)
@@ -328,16 +348,7 @@ public class PlayCards : MonoBehaviour
                 }        
             } else
             {
-                int randomIndex = UnityEngine.Random.Range(0, playerTwoCards.Count);
-                discardedCards.Add(playerTwoCards[randomIndex]);
-                selectedCards.Add(playerTwoCards[randomIndex]);
-                playerTwoCards.Remove(playerTwoCards[randomIndex]);
-
-                newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
-                newCard.name = cardNames[discardedCards[^1]].ToString();
-                newCard.tag = discardedCards[^1].ToString();     
-
-                newCard.GetComponentInChildren<Text>().text = cardNames[discardedCards[^1]];
+                PlayRandomCard(playerTwoCards);
             }
             playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
 
@@ -345,6 +356,7 @@ public class PlayCards : MonoBehaviour
         }
     }
 
+    // Confident Character
     public void Player3PlayCards()
     {
         if (!turnInProgress)
@@ -362,35 +374,65 @@ public class PlayCards : MonoBehaviour
                 if (cardTypes[playerThreeCards[i]] == cardIDtoPlay)
                 {
                     validDiscards.Add(playerThreeCards[i]);
-                    playerTwoCards.Remove(playerThreeCards[i]);
                 }
             }
 
             if (validDiscards.Count() > 0)
             {
-                discardedCards.AddRange(validDiscards);
-                selectedCards.AddRange(validDiscards);
-
-                for (int i = 0; i < validDiscards.Count(); i++)
+                double willBS = UnityEngine.Random.value;
+                // 80% chance of playing valid cards
+                if (willBS < 0.8)
                 {
-                    newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
-                    newCard.name = cardNames[validDiscards[i]].ToString();
-                    newCard.tag = validDiscards[i].ToString();       
+                    discardedCards.AddRange(validDiscards);
+                    selectedCards.AddRange(validDiscards);
+                    foreach (int card in validDiscards)
+                    {
+                        playerThreeCards.Remove(card);
+                    }
 
-                    newCard.GetComponentInChildren<Text>().text = cardNames[validDiscards[i]];
+                    // 5% of playing 4 cards
+                    double willAddAnotherCard = UnityEngine.Random.value;
+                    if (willAddAnotherCard < 0.05)
+                    {
+                        for (int i = validDiscards.Count; i <= 4; i++)
+                        {
+                            SelectRandomCard(playerThreeCards);
+                        }
+                    }
+                    // 10% chance of playing 3 cards
+                    else if (willAddAnotherCard < 0.1)
+                    {
+                        for (int i = validDiscards.Count; i <= 3; i++)
+                        {
+                            SelectRandomCard(playerThreeCards);
+                        }
+                    }
+                    // 20% chance of playing 2 cards
+                    else if (willAddAnotherCard < 0.3)
+                    {
+                        for (int i = validDiscards.Count; i <= 2; i++)
+                        {
+                            SelectRandomCard(playerThreeCards);
+                        }
+                    }
+                    for (int i = 0; i < selectedCards.Count(); i++)
+                    {
+                        newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+                        newCard.name = cardNames[selectedCards[i]].ToString();
+                        newCard.tag = selectedCards[i].ToString();       
+
+                        newCard.GetComponentInChildren<Text>().text = cardNames[selectedCards[i]];
+                    }
+                } 
+                else
+                {
+                    PlayRandomCard(playerThreeCards);
                 }
-            } else
+            } 
+            // 20% chance of BS
+            else
             {
-                int randomIndex = UnityEngine.Random.Range(0, playerThreeCards.Count);
-                discardedCards.Add(playerThreeCards[randomIndex]);
-                selectedCards.Add(playerThreeCards[randomIndex]);
-                playerThreeCards.Remove(playerThreeCards[randomIndex]);
-
-                newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
-                newCard.name = cardNames[discardedCards[^1]].ToString();
-                newCard.tag = discardedCards[^1].ToString();     
-
-                newCard.GetComponentInChildren<Text>().text = cardNames[discardedCards[^1]];
+                PlayRandomCard(playerThreeCards);
             }
             playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
 
@@ -399,6 +441,7 @@ public class PlayCards : MonoBehaviour
 
     }
 
+    // Mysterious Character
     public void Player4PlayCards()
     {
         if (!turnInProgress)
@@ -435,16 +478,7 @@ public class PlayCards : MonoBehaviour
                 }        
             } else
             {
-                int randomIndex = UnityEngine.Random.Range(0, playerFourCards.Count);
-                discardedCards.Add(playerFourCards[randomIndex]);
-                selectedCards.Add(playerFourCards[randomIndex]);
-                playerFourCards.Remove(playerFourCards[randomIndex]);
-
-                newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
-                newCard.name = cardNames[discardedCards[^1]].ToString();
-                newCard.tag = discardedCards[^1].ToString();     
-
-                newCard.GetComponentInChildren<Text>().text = cardNames[discardedCards[^1]];
+                PlayRandomCard(playerFourCards);
             }
 
             playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
