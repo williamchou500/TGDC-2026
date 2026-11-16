@@ -62,6 +62,7 @@ TagManager:
   - 51
   - Selected
   - Discarded
+  - Card Count
   layers:
   - Default
   - TransparentFX

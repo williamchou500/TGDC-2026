@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SelectCards : MonoBehaviour
 
 {
+    private GameObject cardCount;
     private GameObject cards;
     private PlayCards cardsScript;
     private bool isSelected;
@@ -13,6 +15,7 @@ public class SelectCards : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        cardCount = GameObject.FindWithTag("Card Count");
         cards = GameObject.FindWithTag("GameController");
         cardsScript = cards.GetComponent<PlayCards>();
         isSelected = false;
@@ -43,6 +46,8 @@ public class SelectCards : MonoBehaviour
                 isSelected = true;
 
                 cardsScript.UpdatePlayerHand();
+
+                cardCount.GetComponent<Text>().text = $"{cardsScript.selectedCards.Count} CARDS SELECTED";
             } else if (isSelected)
             {
                 gameObject.transform.SetParent(playerHandContainer.transform, false);
@@ -54,6 +59,8 @@ public class SelectCards : MonoBehaviour
                 isSelected = false;
 
                 cardsScript.UpdatePlayerHand();
+
+                cardCount.GetComponent<Text>().text = $"{cardsScript.selectedCards.Count} CARDS SELECTED";
             }
         }
     }

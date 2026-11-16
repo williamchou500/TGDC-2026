@@ -9,6 +9,7 @@ using System.Collections;
 public class PlayCards : MonoBehaviour
 {
     public Sprite cardBack;
+    private GameObject cardCount;
     private List<int> cardIDs;
     private int cardIDtoPlay;
     public GameObject cardToPlayContainer;
@@ -21,6 +22,9 @@ public class PlayCards : MonoBehaviour
     public List<int> cardTypes;
     private List<int> discardedCards;
     private GameObject discardedCardsContainer;
+    public GameObject friendOneCount;
+    public GameObject friendTwoCount;
+    public GameObject friendThreeCount;
     private GameObject newCard;
     public GameObject pause;
     public List<int> playerOneCards;
@@ -36,6 +40,7 @@ public class PlayCards : MonoBehaviour
     private SwitchScreens sceneChanger;
     private List<int> shuffled;
     public int turn;
+    public GameObject turnContainer;
     private bool turnInProgress;
     private const int NUM_PLAYERS = 4;
 
@@ -70,6 +75,8 @@ public class PlayCards : MonoBehaviour
         cardTypes = new List<int> {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 
                                    7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12};
 
+        cardCount = GameObject.FindWithTag("Card Count");
+
         discardedCardsContainer = GameObject.FindWithTag("Discarded");
         discardedCards = new List<int> {};
 
@@ -85,7 +92,8 @@ public class PlayCards : MonoBehaviour
         turn = 0;
         cardIDtoPlay = 0;
         turnInProgress = false;
-        cardToPlayContainer.GetComponent<Text>().text = cardNameTypes[turn % 13];
+        cardToPlayContainer.GetComponent<Text>().text = $"The Desired Cards: {cardNameTypes[turn % 13]}";
+        turnContainer.GetComponent<Text>().text = $"Round {turn + 1} / Your Turn";
 
         LoadCards();
     }
@@ -343,6 +351,8 @@ public class PlayCards : MonoBehaviour
             }
         }
 
+        UpdateFriendCounts();
+
         NextTurn();
     }
 
@@ -470,6 +480,8 @@ public class PlayCards : MonoBehaviour
             selectedCardsContainer.transform.GetChild(i).SetParent(discardedCardsContainer.transform, false);
         }
 
+        cardCount.GetComponent<Text>().text = $"{selectedCards.Count} CARDS SELECTED";
+
         // Pauses execution here for 2 seconds without freezing the game
         yield return new WaitForSeconds(2f);
 
@@ -563,7 +575,8 @@ public class PlayCards : MonoBehaviour
             {
                 PlayRandomCard(playerTwoCards);
             }
-            // playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
+            
+            UpdateFriendCounts();
 
             turnInProgress = true;
         }
@@ -648,7 +661,8 @@ public class PlayCards : MonoBehaviour
             {
                 PlayRandomCard(playerThreeCards);
             }
-            // playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
+            
+            UpdateFriendCounts();
 
             turnInProgress = true;
         }
@@ -696,7 +710,7 @@ public class PlayCards : MonoBehaviour
                 PlayRandomCard(playerFourCards);
             }
 
-            // playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
+            UpdateFriendCounts();
 
             turnInProgress = true;
         }
@@ -764,7 +778,23 @@ public class PlayCards : MonoBehaviour
         
         turn++;
         cardIDtoPlay = turn % 13;
-        cardToPlayContainer.GetComponent<Text>().text = cardNameTypes[cardIDtoPlay];
+        cardToPlayContainer.GetComponent<Text>().text = $"The Desired Cards: {cardNameTypes[turn % 13]}";
+
+        if (turn % NUM_PLAYERS == 0)
+        {
+            turnContainer.GetComponent<Text>().text = $"Round {turn + 1} / Your Turn";
+        } else if (turn % NUM_PLAYERS == 1)
+        {
+            turnContainer.GetComponent<Text>().text = $"Round {turn + 1} / %^&@#* (Friend 1)'s Turn";
+        } else if (turn % NUM_PLAYERS == 2)
+        {
+            turnContainer.GetComponent<Text>().text = $"Round {turn + 1} / !^)^&!#)# (Friend 2)'s Turn";
+        } else if (turn % NUM_PLAYERS == 3)
+        {
+            turnContainer.GetComponent<Text>().text = $"Round {turn + 1} / %^&@#* (Friend 3)'s Turn";
+        }
+
+        UpdateFriendCounts();
     }
 
     public void Punish(int player)
@@ -858,5 +888,12 @@ public class PlayCards : MonoBehaviour
         {
             Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
         }
+    }
+
+    public void UpdateFriendCounts()
+    {
+        friendOneCount.GetComponent<Text>().text = playerTwoCards.Count.ToString();
+        friendTwoCount.GetComponent<Text>().text = playerThreeCards.Count.ToString();
+        friendThreeCount.GetComponent<Text>().text = playerFourCards.Count.ToString();
     }
 }
