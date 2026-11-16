@@ -743,6 +743,7 @@ public class PlayCards : MonoBehaviour
                     double willAddAnotherCard = UnityEngine.Random.value;
                     if (willAddAnotherCard < 0.05)
                     {
+                        isBull = true;
                         for (int i = validDiscards.Count; i <= 4; i++)
                         {
                             SelectRandomCard(playerThreeCards);
@@ -751,6 +752,7 @@ public class PlayCards : MonoBehaviour
                     // 10% chance of playing 3 cards
                     else if (willAddAnotherCard >= 0.05 & willAddAnotherCard < 0.15)
                     {
+                        isBull = true;
                         for (int i = validDiscards.Count; i <= 3; i++)
                         {
                             SelectRandomCard(playerThreeCards);
@@ -759,6 +761,7 @@ public class PlayCards : MonoBehaviour
                     // 20% chance of playing 2 cards
                     else if (willAddAnotherCard >= 0.15 & willAddAnotherCard < 0.35)
                     {
+                        isBull = true;
                         for (int i = validDiscards.Count; i <= 2; i++)
                         {
                             SelectRandomCard(playerThreeCards);
@@ -775,6 +778,7 @@ public class PlayCards : MonoBehaviour
                 } 
                 else
                 {
+                    isBull = true;
                     PlayRandomCard(playerThreeCards);
                 }
             } 
@@ -881,6 +885,7 @@ public class PlayCards : MonoBehaviour
                             double willAddAnotherCard = UnityEngine.Random.value;
                             if (willAddAnotherCard < 0.05)
                             {
+                                isBull = true;
                                 for (int i = validDiscards.Count; i <= 4; i++)
                                 {
                                     SelectRandomCard(playerThreeCards);
@@ -889,6 +894,7 @@ public class PlayCards : MonoBehaviour
                             // 10% chance of playing 3 cards
                             else if (willAddAnotherCard >= 0.05 & willAddAnotherCard < 0.15)
                             {
+                                isBull = true;
                                 for (int i = validDiscards.Count; i <= 3; i++)
                                 {
                                     SelectRandomCard(playerThreeCards);
@@ -897,6 +903,7 @@ public class PlayCards : MonoBehaviour
                             // 20% chance of playing 2 cards
                             else if (willAddAnotherCard >= 0.15 & willAddAnotherCard < 0.35)
                             {
+                                isBull = true;
                                 for (int i = validDiscards.Count; i <= 2; i++)
                                 {
                                     SelectRandomCard(playerThreeCards);
@@ -913,6 +920,7 @@ public class PlayCards : MonoBehaviour
                         } 
                         else
                         {
+                            isBull = true;
                             PlayRandomCard(playerThreeCards);
                         }
                     } 
