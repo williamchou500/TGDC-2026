@@ -130,6 +130,17 @@ public class PlayCards : MonoBehaviour
         }
     }
 
+    public void Pause()
+    {
+        if (!pause.activeInHierarchy)
+        {
+            pause.SetActive(true);
+        } else
+        {
+            pause.SetActive(false);
+        }
+    }
+
     private void Shuffle(List<int> list)
     {
         int n = list.Count;
