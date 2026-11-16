@@ -30,6 +30,7 @@ public class PlayCards : MonoBehaviour
     private GameObject playerFourHand;
     public List<int> selectedCards;
     private GameObject selectedCardsContainer;
+    private SwitchScreens sceneChanger;
     private List<int> shuffled;
     public int turn;
     private bool turnInProgress;
@@ -725,24 +726,28 @@ public class PlayCards : MonoBehaviour
         if (turn % NUM_PLAYERS == 0 & playerOneCards.Count() == 0)
         {
             Debug.Log("Player 1 WINS");
+            sceneChanger.WinningEndScreen();
             return;
         }
 
         if (turn % NUM_PLAYERS == 1 & playerTwoCards.Count() == 0)
         {
             Debug.Log("Player 2 WINS");
+            sceneChanger.LosingEndScreen();
             return;
         }
 
         if (turn % NUM_PLAYERS == 2 & playerThreeCards.Count() == 0)
         {
             Debug.Log("Player 3 WINS");
+            sceneChanger.LosingEndScreen();
             return;
         }
 
         if (turn % NUM_PLAYERS == 3 & playerFourCards.Count() == 0)
         {
             Debug.Log("Player 4 WINS");
+            sceneChanger.LosingEndScreen();
             return;
         }
         
