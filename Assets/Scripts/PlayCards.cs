@@ -82,9 +82,10 @@ public class PlayCards : MonoBehaviour
 
     void Update()
     {   
-        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (turn % 4 == 0 && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             Debug.Log("Space pressed");
+            Player1PlayCards();
         }
 
         // if it isn't the player's turn
