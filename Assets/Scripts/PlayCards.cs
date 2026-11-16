@@ -295,14 +295,14 @@ public class PlayCards : MonoBehaviour
 
     public void CallBullButton()
     {
-        if (!turnInProgress || turn % NUM_PLAYERS == 0) return;
+        if (!turnInProgress || turn % NUM_PLAYERS == 0 || pause.activeInHierarchy || notebook.activeInHierarchy) return;
         resolvingTurn = true;
         CallBull(true);
     }
 
     public void PassButton()
     {
-        if (!turnInProgress || turn % NUM_PLAYERS == 0) return;
+        if (!turnInProgress || turn % NUM_PLAYERS == 0 || pause.activeInHierarchy || notebook.activeInHierarchy) return;
         resolvingTurn = true;
 
         if (turn % NUM_PLAYERS == 1)
