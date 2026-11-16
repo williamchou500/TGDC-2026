@@ -419,7 +419,7 @@ public class PlayCards : MonoBehaviour
             int numOfType = 0;
 
             for (int i = 0; i < playerThreeCards.Count(); i++) {
-                if (cardTypes[playerTwoCards[i]] == cardIDtoPlay)
+                if (cardTypes[playerThreeCards[i]] == cardIDtoPlay)
                 {
                     numOfType++;
                 }
@@ -458,7 +458,7 @@ public class PlayCards : MonoBehaviour
             int numOfType = 0;
 
             for (int i = 0; i < playerFourCards.Count(); i++) {
-                if (cardTypes[playerTwoCards[i]] == cardIDtoPlay)
+                if (cardTypes[playerFourCards[i]] == cardIDtoPlay)
                 {
                     numOfType++;
                 }
