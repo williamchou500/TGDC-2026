@@ -10,12 +10,14 @@ using System.Data;
 
 public class PlayCards : MonoBehaviour
 {
+    public Sprite cardBack;
     private List<int> cardIDs;
     private int cardIDtoPlay;
     private List<string> cardNames;
     public GameObject cardPrefab;
     public GameObject cardPrefabTwoThirds;
     public GameObject cardPrefabHalf;
+    public List<Sprite> cardSprites;
     public List<int> cardTypes;
     private List<int> discardedCards;
     private GameObject discardedCardsContainer;
