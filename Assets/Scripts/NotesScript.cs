@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class NotesScript : MonoBehaviour
@@ -14,7 +15,14 @@ public class NotesScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Keyboard.current.nKey.wasPressedThisFrame & !notesPanel.activeInHierarchy)
+        {
+            Debug.Log("pressed n");
+            showNotes();
+        } else if (Keyboard.current.nKey.wasPressedThisFrame & notesPanel.activeInHierarchy)
+        {
+            hideNotes();
+        }
     }
 
     public void showNotes()
