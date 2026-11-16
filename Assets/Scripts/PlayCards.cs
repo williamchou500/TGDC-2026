@@ -26,6 +26,7 @@ public class PlayCards : MonoBehaviour
     public GameObject dialogueText;
     public GameObject friendCounts;
     private GameObject newCard;
+    public GameObject notebook;
     public GameObject pause;
     public List<int> playerOneCards;
     private List<int> playerTwoCards;
@@ -108,7 +109,7 @@ public class PlayCards : MonoBehaviour
 
     void Update()
     {   
-        if (turn % 4 == 0 && Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (turn % 4 == 0 && Keyboard.current.spaceKey.wasPressedThisFrame && !pause.activeInHierarchy && !notebook.activeInHierarchy)
         {
             Debug.Log("Space pressed");
             Player1PlayCards();

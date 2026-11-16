@@ -1450,6 +1450,7 @@ MonoBehaviour:
   dialogueSpeaker: {fileID: 1165161009}
   dialogueText: {fileID: 1318517393}
   friendCounts: {fileID: 2013717962}
+  notebook: {fileID: 265528439}
   pause: {fileID: 2126885821}
   playerOneCards: 
   selectedCards: 
@@ -3995,7 +3996,7 @@ GameObject:
   - component: {fileID: 1172292319}
   - component: {fileID: 1172292318}
   m_Layer: 5
-  m_Name: Close Notebook
+  m_Name: Open Notebook Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
