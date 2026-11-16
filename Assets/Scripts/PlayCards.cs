@@ -2,12 +2,9 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.InputSystem;
-using System.Data;
-using NUnit.Framework.Interfaces;
+using System.Collections;
 
 public class PlayCards : MonoBehaviour
 {
@@ -456,50 +453,69 @@ public class PlayCards : MonoBehaviour
             return;
         }
 
+        // Start the coroutine to handle the sequence with pauses
+        StartCoroutine(Player1PlayCardsRoutine());
+    }
+
+    private IEnumerator Player1PlayCardsRoutine()
+    {
         for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
         {
             selectedCardsContainer.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
             selectedCardsContainer.transform.GetChild(i).SetParent(discardedCardsContainer.transform, false);
         }
 
+        // Pauses execution here for 2 seconds without freezing the game
+        yield return new WaitForSeconds(2f);
+
         discardedCards.AddRange(selectedCards);
-        
+
         if (MakeDecision(1))
         {
             if (CallBull())
             {
                 Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
                 Punish(0);
-            } else
+            }
+            else
             {
                 Debug.Log("PLAYER 2 CALLED BS AND WAS WRONG");
                 Punish(1);
             }
-        } else if (MakeDecision(2))
+        }
+        else if (MakeDecision(2))
         {
             if (CallBull())
             {
                 Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
                 Punish(0);
-            } else
+            }
+            else
             {
                 Debug.Log("PLAYER 3 CALLED BS AND WAS WRONG");
                 Punish(2);
             }
-        } else if (MakeDecision(3))
+        }
+        else if (MakeDecision(3))
         {
             if (CallBull())
             {
                 Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
                 Punish(0);
-            } else
+            }
+            else
             {
                 Debug.Log("PLAYER 4 CALLED BS AND WAS WRONG");
                 Punish(3);
             }
         }
-        Invoke(nameof(ClearCards), 1f);
-        Invoke(nameof(NextTurn), 2f);
+
+        // You can replace Invoke() with yield statements to keep the entire timeline in one place
+        yield return new WaitForSeconds(1f);
+        ClearCards();
+
+        yield return new WaitForSeconds(1f); // 1s + 1s = 2 seconds total after the BS check
+        NextTurn();
     }
 
     // Timid Character
