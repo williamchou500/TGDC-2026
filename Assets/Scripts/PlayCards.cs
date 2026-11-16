@@ -7,13 +7,16 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using System.Data;
+using NUnit.Framework.Interfaces;
 
 public class PlayCards : MonoBehaviour
 {
     public Sprite cardBack;
     private List<int> cardIDs;
     private int cardIDtoPlay;
+    public GameObject cardToPlayContainer;
     private List<string> cardNames;
+    private List<string> cardNameTypes;
     public GameObject cardPrefab;
     public GameObject cardPrefabTwoThirds;
     public GameObject cardPrefabHalf;
@@ -22,6 +25,7 @@ public class PlayCards : MonoBehaviour
     private List<int> discardedCards;
     private GameObject discardedCardsContainer;
     private GameObject newCard;
+    public GameObject pause;
     public List<int> playerOneCards;
     private List<int> playerTwoCards;
     private List<int> playerThreeCards;
@@ -40,6 +44,8 @@ public class PlayCards : MonoBehaviour
 
     void Start()
     {
+        pause.SetActive(false);
+
         cardIDs = new List<int> {0,1,2,3,4,5,6,7,8,9,10,11,12,
                                  13,14,15,16,17,18,19,20,21,22,23,24,25,
                                  26,27,28,29,30,31,32,33,34,35,36,37,38,
@@ -60,6 +66,10 @@ public class PlayCards : MonoBehaviour
         "Queen of Diamonds", "Queen of Clubs", "Queen of Hearts", "Queen of Spades", 
         "King of Diamonds", "King of Clubs", "King of Hearts", "King of Spades"};
 
+        cardNameTypes = new List<String> {"Aces", "Twos", "Threes", "Fours", "Fives", "Sixes", 
+                                          "Sevens", "Eights", "Nines", "Tens", "Jacks", "Queens", 
+                                          "Kings"};
+
         cardTypes = new List<int> {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 
                                    7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12};
 
@@ -78,6 +88,9 @@ public class PlayCards : MonoBehaviour
         turn = 0;
         cardIDtoPlay = 0;
         turnInProgress = false;
+        cardToPlayContainer.GetComponent<Text>().text = cardNameTypes[turn % 13];
+
+        LoadCards();
     }
 
     void Update()
@@ -86,6 +99,14 @@ public class PlayCards : MonoBehaviour
         {
             Debug.Log("Space pressed");
             Player1PlayCards();
+        }
+
+        if (Keyboard.current.escapeKey.wasPressedThisFrame && !pause.activeInHierarchy)
+        {
+            pause.SetActive(true);
+        } else if (Keyboard.current.escapeKey.wasPressedThisFrame && pause.activeInHierarchy)
+        {
+            pause.SetActive(false);
         }
 
         // if it isn't the player's turn
@@ -151,9 +172,9 @@ public class PlayCards : MonoBehaviour
         Debug.Log(string.Join(",",playerThreeCards));
         Debug.Log(string.Join(",",playerFourCards));
 
-        playerTwoHand.GetComponent<Text>().text = string.Join(",",playerTwoCards);
-        playerThreeHand.GetComponent<Text>().text = string.Join(",",playerThreeCards);
-        playerFourHand.GetComponent<Text>().text = string.Join(",",playerFourCards);
+        // playerTwoHand.GetComponent<Text>().text = string.Join(",",playerTwoCards);
+        // playerThreeHand.GetComponent<Text>().text = string.Join(",",playerThreeCards);
+        // playerFourHand.GetComponent<Text>().text = string.Join(",",playerFourCards);
 
 
         for (int i = 0; i < playerOneCards.Count(); i++)
@@ -189,6 +210,12 @@ public class PlayCards : MonoBehaviour
         // this just checks if the discard tiles are bull or not
         // we can probably make this return true or false and the use the turn number to find out who to punish
 
+        for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
+        {
+            newCard = discardedCardsContainer.transform.GetChild(i).gameObject;
+            newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardSprites[int.Parse(newCard.tag)];
+        }
+
         cardIDtoPlay = turn % 13;
 
         Debug.Log(String.Join(",", selectedCards)); 
@@ -202,8 +229,9 @@ public class PlayCards : MonoBehaviour
                 if (PlayerOneCalled)
                 {
                     Debug.Log("Player 1 right");
+                    Invoke(nameof(ClearCards), 1f);
                     Punish(turn % NUM_PLAYERS);
-                    NextTurn();
+                    Invoke(nameof(NextTurn), 2f);
                     return true;
                 }
                 Debug.Log("BULLLLLLLLLLL");
@@ -215,9 +243,11 @@ public class PlayCards : MonoBehaviour
         if (PlayerOneCalled)
         {
             Debug.Log("Player 1 wrong");
+            Invoke(nameof(ClearCards), 1f);
+
             Punish(0);   
-            NextTurn();
-        } 
+            Invoke(nameof(NextTurn), 2f);
+        }
 
         Debug.Log("not bull");
         return false;
@@ -412,7 +442,7 @@ public class PlayCards : MonoBehaviour
         newCard.name = cardNames[discardedCards[^1]].ToString();
         newCard.tag = discardedCards[^1].ToString();     
 
-        newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardSprites[discardedCards[^1]];
+        newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
     }
 
     public void Player1PlayCards()
@@ -468,9 +498,7 @@ public class PlayCards : MonoBehaviour
                 Punish(3);
             }
         }
-
         Invoke(nameof(ClearCards), 1f);
-
         Invoke(nameof(NextTurn), 2f);
     }
 
@@ -514,7 +542,7 @@ public class PlayCards : MonoBehaviour
             {
                 PlayRandomCard(playerTwoCards);
             }
-            playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
+            // playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
 
             turnInProgress = true;
         }
@@ -599,7 +627,7 @@ public class PlayCards : MonoBehaviour
             {
                 PlayRandomCard(playerThreeCards);
             }
-            playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
+            // playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
 
             turnInProgress = true;
         }
@@ -647,7 +675,7 @@ public class PlayCards : MonoBehaviour
                 PlayRandomCard(playerFourCards);
             }
 
-            playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
+            // playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
 
             turnInProgress = true;
         }
@@ -715,6 +743,7 @@ public class PlayCards : MonoBehaviour
         
         turn++;
         cardIDtoPlay = turn % 13;
+        cardToPlayContainer.GetComponent<Text>().text = cardNameTypes[cardIDtoPlay];
     }
 
     public void Punish(int player)
@@ -733,21 +762,21 @@ public class PlayCards : MonoBehaviour
             discardedCards = new List<int> {};
             playerTwoCards.Sort();
 
-            playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
+            // playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
         } else if (player == 2)
         {
             playerThreeCards.AddRange(discardedCards);
             discardedCards = new List<int> {};
             playerThreeCards.Sort();
 
-            playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
+            // playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
         } else if (player == 3)
         {
             playerFourCards.AddRange(discardedCards);
             discardedCards = new List<int> {};
             playerFourCards.Sort();
 
-            playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
+            // playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
         }
     }
 
@@ -785,9 +814,9 @@ public class PlayCards : MonoBehaviour
             newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardSprites[playerOneCards[i]];
         }   
 
-        playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
-        playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
-        playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
+        // playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
+        // playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
+        // playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
     }
 
     public void ClearCards()
