@@ -37,9 +37,10 @@ public class PlayCards : MonoBehaviour
     private GameObject playerTwoHand;
     private GameObject playerThreeHand;
     private GameObject playerFourHand;
+    private bool resolvingTurn;
     public List<int> selectedCards;
     private GameObject selectedCardsContainer;
-    private SwitchScreens sceneChanger;
+    public SwitchScreens sceneChanger;
     private List<int> shuffled;
     public int turn;
     public GameObject turnContainer;
@@ -145,6 +146,9 @@ public class PlayCards : MonoBehaviour
 
     public void LoadCards()
     {
+        resolvingTurn = false;
+        turnInProgress = false;
+
         for (int i = playerOneHand.transform.childCount - 1; i >= 0; i--)
         {
             Destroy(playerOneHand.transform.GetChild(i).gameObject);
@@ -282,12 +286,14 @@ public class PlayCards : MonoBehaviour
     public void CallBullButton()
     {
         if (!turnInProgress || turn % NUM_PLAYERS == 0) return;
+        resolvingTurn = true;
         CallBull(true);
     }
 
     public void PassButton()
     {
         if (!turnInProgress || turn % NUM_PLAYERS == 0) return;
+        resolvingTurn = true;
 
         if (turn % NUM_PLAYERS == 1)
         {
@@ -412,7 +418,7 @@ public class PlayCards : MonoBehaviour
         {
             int numOfType = 0;
 
-            for (int i = 0; i < playerTwoCards.Count(); i++) {
+            for (int i = 0; i < playerThreeCards.Count(); i++) {
                 if (cardTypes[playerTwoCards[i]] == cardIDtoPlay)
                 {
                     numOfType++;
@@ -451,7 +457,7 @@ public class PlayCards : MonoBehaviour
         {
             int numOfType = 0;
 
-            for (int i = 0; i < playerTwoCards.Count(); i++) {
+            for (int i = 0; i < playerFourCards.Count(); i++) {
                 if (cardTypes[playerTwoCards[i]] == cardIDtoPlay)
                 {
                     numOfType++;
@@ -488,6 +494,9 @@ public class PlayCards : MonoBehaviour
 
     public void Player1PlayCards()
     {
+        if (turn % NUM_PLAYERS != 0 || resolvingTurn) return;
+        resolvingTurn = true;
+
         Debug.Log("Player1PlayCards called. Turn = " + turn);
         Debug.Log("Turn modulo = " + turn % NUM_PLAYERS);
 
@@ -657,7 +666,7 @@ public class PlayCards : MonoBehaviour
 
             List<int> validDiscards = new List<int> {};
 
-            for (int i = playerThreeCards.Count() - 1; i == 0; i--)
+            for (int i = playerThreeCards.Count() - 1; i >= 0; i--)
             {
                 if (cardTypes[playerThreeCards[i]] == cardIDtoPlay)
                 {
@@ -758,12 +767,12 @@ public class PlayCards : MonoBehaviour
             
             List<int> validDiscards = new List<int> {};
 
-            for (int i = playerFourCards.Count() - 1; i == 0; i--)
+            for (int i = playerFourCards.Count() - 1; i >= 0; i--)
             {
                 if (cardTypes[playerFourCards[i]] == cardIDtoPlay)
                 {
                     validDiscards.Add(playerFourCards[i]);
-                    playerTwoCards.Remove(playerFourCards[i]);
+                    playerFourCards.Remove(playerFourCards[i]);
                 }
             }
 
@@ -822,6 +831,7 @@ public class PlayCards : MonoBehaviour
 
     public void NextTurn()
     {
+        resolvingTurn = true;
         ClearCards();
 
         selectedCards = new List<int> {};
