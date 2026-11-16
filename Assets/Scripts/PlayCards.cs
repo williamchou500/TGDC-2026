@@ -179,19 +179,24 @@ public class PlayCards : MonoBehaviour
             if (playerOneCards.Count() > 39)
             {
                 newCard = Instantiate(cardPrefabHalf, playerOneHand.transform);
-                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(50,70);
-                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(65,10);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(80/4,112/4);
+                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(75,10);
 
             } else if (playerOneCards.Count() > 26)
             {
                 newCard = Instantiate(cardPrefabTwoThirds, playerOneHand.transform);
-                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(200/3,280/3);
-                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(47,10);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(80/3,112/3);
+                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(68,10);
+            } else if (playerOneCards.Count() > 13)
+            {
+                newCard = Instantiate(cardPrefabTwoThirds, playerOneHand.transform);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(40,56);
+                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(54,10);
             }
             else
             {
                 newCard = Instantiate(cardPrefab, playerOneHand.transform);
-                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(100,140);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(80,112);
                 playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(10,10);
             }
 
@@ -808,19 +813,24 @@ public class PlayCards : MonoBehaviour
             if (playerOneCards.Count() > 39)
             {
                 newCard = Instantiate(cardPrefabHalf, playerOneHand.transform);
-                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(50,70);
-                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(65,10);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(80/4,112/4);
+                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(75,10);
 
             } else if (playerOneCards.Count() > 26)
             {
                 newCard = Instantiate(cardPrefabTwoThirds, playerOneHand.transform);
-                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(200/3,280/3);
-                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(47,10);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(80/3,112/3);
+                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(68,10);
+            } else if (playerOneCards.Count() > 13)
+            {
+                newCard = Instantiate(cardPrefabTwoThirds, playerOneHand.transform);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(40,56);
+                playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(54,10);
             }
             else
             {
                 newCard = Instantiate(cardPrefab, playerOneHand.transform);
-                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(100,140);
+                playerOneHand.GetComponent<GridLayoutGroup>().cellSize = new Vector2(80,112);
                 playerOneHand.GetComponent<GridLayoutGroup>().spacing = new Vector2(10,10);
             }
 
