@@ -180,7 +180,7 @@ public class PlayCards : MonoBehaviour
             newCard.name = cardNames[playerOneCards[i]].ToString();
             newCard.tag = playerOneCards[i].ToString();
         
-            newCard.GetComponentInChildren<Text>().text = cardNames[playerOneCards[i]];
+            newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardSprites[playerOneCards[i]];
         }
     }
 
@@ -194,15 +194,6 @@ public class PlayCards : MonoBehaviour
         Debug.Log(String.Join(",", selectedCards)); 
         Debug.Log(cardIDtoPlay);
 
-        if (PlayerOneCalled & selectedCards.Count() == 0)
-        {
-            Debug.Log("no cards in selectedCards");
-            // REMOVE THE NEXT TURN CALL HERE, DO NOT PROGRESS TO THE NEXT TURN IF NO CARDS HAVE BEEN SELECTED/DISCARDED BY NPC
-            // THIS IS HERE JUST FOR TESTING 
-            NextTurn(true);
-            return false;
-        }
-
         for (int i = 0; i < selectedCards.Count(); i++)
         {
             Debug.Log(cardTypes[selectedCards[i]]);
@@ -212,7 +203,7 @@ public class PlayCards : MonoBehaviour
                 {
                     Debug.Log("Player 1 right");
                     Punish(turn % NUM_PLAYERS);
-                    NextTurn(true);
+                    NextTurn();
                     return true;
                 }
                 Debug.Log("BULLLLLLLLLLL");
@@ -225,7 +216,7 @@ public class PlayCards : MonoBehaviour
         {
             Debug.Log("Player 1 wrong");
             Punish(0);   
-            NextTurn(true);
+            NextTurn();
         } 
 
         Debug.Log("not bull");
@@ -320,7 +311,7 @@ public class PlayCards : MonoBehaviour
             }
         }
 
-        NextTurn(true);
+        NextTurn();
     }
 
     public bool MakeDecision(int player)
@@ -421,7 +412,7 @@ public class PlayCards : MonoBehaviour
         newCard.name = cardNames[discardedCards[^1]].ToString();
         newCard.tag = discardedCards[^1].ToString();     
 
-        newCard.GetComponentInChildren<Text>().text = cardNames[discardedCards[^1]];
+        newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardSprites[discardedCards[^1]];
     }
 
     public void Player1PlayCards()
@@ -436,7 +427,8 @@ public class PlayCards : MonoBehaviour
         }
 
         for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
-            {
+        {
+            selectedCardsContainer.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
             selectedCardsContainer.transform.GetChild(i).SetParent(discardedCardsContainer.transform, false);
         }
 
@@ -477,7 +469,9 @@ public class PlayCards : MonoBehaviour
             }
         }
 
-        NextTurn(true);
+        Invoke(nameof(ClearCards), 1f);
+
+        Invoke(nameof(NextTurn), 2f);
     }
 
     // Timid Character
@@ -485,15 +479,7 @@ public class PlayCards : MonoBehaviour
     {
         if (!turnInProgress)
         {
-            for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
-            }
-
-            for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
-            }
+            ClearCards();
 
             discardedCards.AddRange(selectedCards);
             selectedCards = new List<int> {};
@@ -522,7 +508,7 @@ public class PlayCards : MonoBehaviour
                     newCard.name = cardNames[validDiscards[i]].ToString();
                     newCard.tag = validDiscards[i].ToString();       
 
-                    newCard.GetComponentInChildren<Text>().text = cardNames[validDiscards[i]];
+                    newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
                 }        
             } else
             {
@@ -539,15 +525,7 @@ public class PlayCards : MonoBehaviour
     {
         if (!turnInProgress)
         {
-            for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
-            }
-
-            for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
-            }
+            ClearCards();
 
             discardedCards.AddRange(selectedCards);
             selectedCards = new List<int> {};
@@ -608,7 +586,7 @@ public class PlayCards : MonoBehaviour
                         newCard.name = cardNames[selectedCards[i]].ToString();
                         newCard.tag = selectedCards[i].ToString();       
 
-                        newCard.GetComponentInChildren<Text>().text = cardNames[selectedCards[i]];
+                        newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
                     }
                 } 
                 else
@@ -633,15 +611,7 @@ public class PlayCards : MonoBehaviour
     {
         if (!turnInProgress)
         {
-            for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
-            }
-
-            for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
-            }
+            ClearCards();
 
             discardedCards.AddRange(selectedCards);
             selectedCards = new List<int> {};
@@ -670,7 +640,7 @@ public class PlayCards : MonoBehaviour
                     newCard.name = cardNames[validDiscards[i]].ToString();
                     newCard.tag = validDiscards[i].ToString();       
 
-                    newCard.GetComponentInChildren<Text>().text = cardNames[validDiscards[i]];
+                    newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
                 }        
             } else
             {
@@ -699,22 +669,11 @@ public class PlayCards : MonoBehaviour
         }
     }
 
-    public void NextTurn(bool isPlayerOne = false)
+    public void NextTurn()
     {
-        for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
-        {
-            Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
-        }
+        ClearCards();
 
         selectedCards = new List<int> {};
-
-        for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
-        {
-            Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
-        }
-
-        selectedCards = new List<int> {};
-        discardedCards = new List<int> {};
 
         if (turn % NUM_PLAYERS != 3) 
         {
@@ -823,11 +782,26 @@ public class PlayCards : MonoBehaviour
             newCard.name = cardNames[playerOneCards[i]].ToString();
             newCard.tag = playerOneCards[i].ToString();
         
-            newCard.GetComponentInChildren<Text>().text = cardNames[playerOneCards[i]];
+            newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardSprites[playerOneCards[i]];
         }   
 
         playerTwoHand.GetComponent<Text>().text = string.Join(",", playerTwoCards);
         playerThreeHand.GetComponent<Text>().text = string.Join(",", playerThreeCards);
         playerFourHand.GetComponent<Text>().text = string.Join(",", playerFourCards);
+    }
+
+    public void ClearCards()
+    {
+        for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(selectedCardsContainer.transform.GetChild(i).gameObject);
+        }
+
+        selectedCards = new List<int> {};
+
+        for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(discardedCardsContainer.transform.GetChild(i).gameObject);
+        }
     }
 }

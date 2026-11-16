@@ -2664,10 +2664,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 433044404320911415, guid: dc551851e186cc743822c22f1d3347d8, type: 3}
-      propertyPath: cardsScript
-      value: 
-      objectReference: {fileID: 547371187}
     - target: {fileID: 3308332093565874834, guid: dc551851e186cc743822c22f1d3347d8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
