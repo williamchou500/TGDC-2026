@@ -24,9 +24,7 @@ public class PlayCards : MonoBehaviour
     private GameObject discardedCardsContainer;
     public GameObject dialogueSpeaker;
     public GameObject dialogueText;
-    public GameObject friendOneCount;
-    public GameObject friendTwoCount;
-    public GameObject friendThreeCount;
+    public GameObject friendCounts;
     private GameObject newCard;
     public GameObject pause;
     public List<int> playerOneCards;
@@ -1097,8 +1095,6 @@ public class PlayCards : MonoBehaviour
 
     public void UpdateFriendCounts()
     {
-        friendOneCount.GetComponent<Text>().text = playerTwoCards.Count.ToString();
-        friendTwoCount.GetComponent<Text>().text = playerThreeCards.Count.ToString();
-        friendThreeCount.GetComponent<Text>().text = playerFourCards.Count.ToString();
+        friendCounts.GetComponent<Text>().text = $"• <b>Friend 1</b> has <b>{playerTwoCards.Count}</b> card(s) remaining.\n\n• <b>Friend 2</b> has <b>{playerThreeCards.Count}</b> card(s) remaining.\n\n• <b>Friend 3</b> has <b>{playerFourCards.Count}</b> card(s) remaining.";
     }
 }

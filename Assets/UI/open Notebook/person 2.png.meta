@@ -129,14 +129,22 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 12
+        width: 110
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline: []
-      physicsShape: []
+      outline:
+      - - {x: 0, y: -8}
+        - {x: 55, y: 0}
+        - {x: 0, y: 8}
+        - {x: -55, y: 0}
+      physicsShape:
+      - - {x: 0, y: -8}
+        - {x: 55, y: 0}
+        - {x: 0, y: 8}
+        - {x: -55, y: 0}
       tessellationDetail: -1
       bones: []
       spriteID: bf75bd45113d72d80800000000000000
@@ -145,187 +153,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: person 2_1
-      rect:
-        serializedVersion: 2
-        x: 11
-        y: 1
-        width: 13
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fbb039d8b8a437170800000000000000
-      internalID: 8174959711843716031
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: person 2_2
-      rect:
-        serializedVersion: 2
-        x: 26
-        y: 0
-        width: 10
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c38dcc835444b8a80800000000000000
-      internalID: -8463596010616334276
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: person 2_3
-      rect:
-        serializedVersion: 2
-        x: 38
-        y: 1
-        width: 12
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: eaeeb0482cd04cdf0800000000000000
-      internalID: -160988557588304210
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: person 2_4
-      rect:
-        serializedVersion: 2
-        x: 49
-        y: 1
-        width: 13
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7ca7da8fa165649d0800000000000000
-      internalID: -2790448245268186425
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: person 2_5
-      rect:
-        serializedVersion: 2
-        x: 61
-        y: 1
-        width: 12
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5843d41aa56772e60800000000000000
-      internalID: 7937442999889114245
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: person 2_6
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 1
-        width: 12
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c46bfd9aaa37d3da0800000000000000
-      internalID: -5963483154737023412
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: person 2_7
-      rect:
-        serializedVersion: 2
-        x: 83
-        y: 1
-        width: 12
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2221f0146410e46a0800000000000000
-      internalID: -6463227013979237854
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: person 2_8
-      rect:
-        serializedVersion: 2
-        x: 98
-        y: 1
-        width: 12
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7316685e193c59090800000000000000
-      internalID: -8028295729329577673
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f0c7df2f707b5284bbfead3a3fb2aa47
     internalID: 0
     vertices: []
     indices: 
@@ -333,17 +165,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":110.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":3,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       person 2_0: -8275413718878431237
-      person 2_1: 8174959711843716031
-      person 2_2: -8463596010616334276
-      person 2_3: -160988557588304210
-      person 2_4: -2790448245268186425
-      person 2_5: 7937442999889114245
-      person 2_6: -5963483154737023412
-      person 2_7: -6463227013979237854
-      person 2_8: -8028295729329577673
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

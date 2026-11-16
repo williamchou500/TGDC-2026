@@ -129,14 +129,22 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 5
+        width: 130
         height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline: []
-      physicsShape: []
+      outline:
+      - - {x: 0, y: -6.5}
+        - {x: 65, y: 0}
+        - {x: 0, y: 6.5}
+        - {x: -65, y: 0}
+      physicsShape:
+      - - {x: 0, y: -6.5}
+        - {x: 65, y: 0}
+        - {x: 0, y: 6.5}
+        - {x: -65, y: 0}
       tessellationDetail: -1
       bones: []
       spriteID: 1a4eb9c77529d4b90800000000000000
@@ -145,187 +153,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: overlay caption_1
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 0
-        width: 22
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f23e0bb8572158f10800000000000000
-      internalID: 2271241883142382383
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: overlay caption_2
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 0
-        width: 19
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7dbc822f2cac207c0800000000000000
-      internalID: -4106496971573244969
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: overlay caption_3
-      rect:
-        serializedVersion: 2
-        x: 46
-        y: 0
-        width: 20
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 504f979e00c8937d0800000000000000
-      internalID: -2938163346337565691
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: overlay caption_4
-      rect:
-        serializedVersion: 2
-        x: 63
-        y: 0
-        width: 12
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 110ed2f89f5f944e0800000000000000
-      internalID: -1996794507564294127
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: overlay caption_5
-      rect:
-        serializedVersion: 2
-        x: 76
-        y: 0
-        width: 21
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9821804ccbb578a80800000000000000
-      internalID: -8464696108318715255
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: overlay caption_6
-      rect:
-        serializedVersion: 2
-        x: 93
-        y: 0
-        width: 13
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 90885ae4340bad550800000000000000
-      internalID: 6186450841275566089
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: overlay caption_7
-      rect:
-        serializedVersion: 2
-        x: 103
-        y: 0
-        width: 19
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: be89597d7efb74d90800000000000000
-      internalID: -7113506083933153045
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: overlay caption_8
-      rect:
-        serializedVersion: 2
-        x: 124
-        y: 0
-        width: 6
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8163e7c095b392b00800000000000000
-      internalID: 804239262110070296
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3c3e46d57270f40439d724b6cf06ba59
     internalID: 0
     vertices: []
     indices: 
@@ -333,17 +165,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":130.0,"y":13.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":3,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       overlay caption_0: -7255982520173599583
-      overlay caption_1: 2271241883142382383
-      overlay caption_2: -4106496971573244969
-      overlay caption_3: -2938163346337565691
-      overlay caption_4: -1996794507564294127
-      overlay caption_5: -8464696108318715255
-      overlay caption_6: 6186450841275566089
-      overlay caption_7: -7113506083933153045
-      overlay caption_8: 804239262110070296
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
