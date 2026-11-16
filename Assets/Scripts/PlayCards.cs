@@ -22,6 +22,8 @@ public class PlayCards : MonoBehaviour
     public List<int> cardTypes;
     private List<int> discardedCards;
     private GameObject discardedCardsContainer;
+    public GameObject dialogueSpeaker;
+    public GameObject dialogueText;
     public GameObject friendOneCount;
     public GameObject friendTwoCount;
     public GameObject friendThreeCount;
@@ -68,9 +70,9 @@ public class PlayCards : MonoBehaviour
         "Queen of Diamonds", "Queen of Clubs", "Queen of Hearts", "Queen of Spades", 
         "King of Diamonds", "King of Clubs", "King of Hearts", "King of Spades"};
 
-        cardNameTypes = new List<String> {"Aces", "Twos", "Threes", "Fours", "Fives", "Sixes", 
-                                          "Sevens", "Eights", "Nines", "Tens", "Jacks", "Queens", 
-                                          "Kings"};
+        cardNameTypes = new List<String> {"Ace", "Two", "Three", "Four", "Five", "Six", 
+                                          "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", 
+                                          "King"};
 
         cardTypes = new List<int> {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 
                                    7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12};
@@ -92,7 +94,14 @@ public class PlayCards : MonoBehaviour
         turn = 0;
         cardIDtoPlay = 0;
         turnInProgress = false;
-        cardToPlayContainer.GetComponent<Text>().text = $"The Desired Cards: {cardNameTypes[turn % 13]}";
+        if (turn % 13 == 5)
+        {
+            cardToPlayContainer.GetComponent<Text>().text = $"The Desired Cards: {cardNameTypes[turn % 13]}es";
+        } else
+        {
+            cardToPlayContainer.GetComponent<Text>().text = $"The Desired Cards: {cardNameTypes[turn % 13]}";
+        }
+        
         turnContainer.GetComponent<Text>().text = $"Round {turn + 1} / Your Turn";
 
         LoadCards();
@@ -147,6 +156,7 @@ public class PlayCards : MonoBehaviour
         }
 
         selectedCards = new List<int> {};
+        cardCount.GetComponent<Text>().text = $"{selectedCards.Count} CARDS SELECTED";
 
         for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
         {
@@ -219,6 +229,11 @@ public class PlayCards : MonoBehaviour
     {
         // this just checks if the discard tiles are bull or not
         // we can probably make this return true or false and the use the turn number to find out who to punish
+        if (PlayerOneCalled)
+        {
+            dialogueSpeaker.GetComponent<Text>().text = "You";
+            dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
+        }
 
         for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
         {
@@ -239,9 +254,9 @@ public class PlayCards : MonoBehaviour
                 if (PlayerOneCalled)
                 {
                     Debug.Log("Player 1 right");
-                    Invoke(nameof(ClearCards), 1f);
+                    ClearCards();
                     Punish(turn % NUM_PLAYERS);
-                    Invoke(nameof(NextTurn), 2f);
+                    Invoke(nameof(NextTurn), 1f);
                     return true;
                 }
                 Debug.Log("BULLLLLLLLLLL");
@@ -253,10 +268,10 @@ public class PlayCards : MonoBehaviour
         if (PlayerOneCalled)
         {
             Debug.Log("Player 1 wrong");
-            Invoke(nameof(ClearCards), 1f);
+            ClearCards();
 
             Punish(0);   
-            Invoke(nameof(NextTurn), 2f);
+            Invoke(nameof(NextTurn), 1f);
         }
 
         Debug.Log("not bull");
@@ -278,6 +293,8 @@ public class PlayCards : MonoBehaviour
         {
             if (MakeDecision(2))
             {
+                dialogueSpeaker.GetComponent<Text>().text = "!^)^&!#)# (Friend 2)";
+                dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
@@ -289,6 +306,8 @@ public class PlayCards : MonoBehaviour
                 }
             } else if (MakeDecision(3))
             {
+                dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 3)";
+                dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
@@ -303,6 +322,8 @@ public class PlayCards : MonoBehaviour
         {
             if (MakeDecision(3))
             {
+                dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 3)";
+                dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
@@ -314,6 +335,8 @@ public class PlayCards : MonoBehaviour
                 }
             } else if (MakeDecision(1))
             {
+                dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 1)";
+                dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
@@ -328,6 +351,8 @@ public class PlayCards : MonoBehaviour
         {
             if (MakeDecision(1))
             {
+                dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 1)";
+                dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
@@ -339,6 +364,8 @@ public class PlayCards : MonoBehaviour
                 }
             } else if (MakeDecision(2))
             {
+                dialogueSpeaker.GetComponent<Text>().text = "!^)^&!#)# (Friend 2)";
+                dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
@@ -353,7 +380,9 @@ public class PlayCards : MonoBehaviour
 
         UpdateFriendCounts();
 
-        NextTurn();
+        ClearCards();
+
+        Invoke(nameof(NextTurn), 1f);
     }
 
     public bool MakeDecision(int player)
@@ -474,6 +503,19 @@ public class PlayCards : MonoBehaviour
 
     private IEnumerator Player1PlayCardsRoutine()
     {
+        dialogueSpeaker.GetComponent<Text>().text = "You";
+
+        if (selectedCards.Count == 1)
+        {
+            dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}!";   
+        } else if (selectedCards.Count > 1 && turn % 13 == 5) 
+        {
+            dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}es!";   
+        } else if (selectedCards.Count > 1)
+        {
+            dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}s!";   
+        }
+
         for (int i = selectedCardsContainer.transform.childCount - 1; i >= 0; i--)
         {
             selectedCardsContainer.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
@@ -489,6 +531,8 @@ public class PlayCards : MonoBehaviour
 
         if (MakeDecision(1))
         {
+            dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 1)";
+            dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
             if (CallBull())
             {
                 Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
@@ -502,6 +546,8 @@ public class PlayCards : MonoBehaviour
         }
         else if (MakeDecision(2))
         {
+            dialogueSpeaker.GetComponent<Text>().text = "!^)^&!#)# (Friend 2)";
+            dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
             if (CallBull())
             {
                 Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
@@ -515,6 +561,8 @@ public class PlayCards : MonoBehaviour
         }
         else if (MakeDecision(3))
         {
+            dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 3)";
+            dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
             if (CallBull())
             {
                 Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
@@ -527,11 +575,9 @@ public class PlayCards : MonoBehaviour
             }
         }
 
-        // You can replace Invoke() with yield statements to keep the entire timeline in one place
-        yield return new WaitForSeconds(1f);
         ClearCards();
 
-        yield return new WaitForSeconds(1f); // 1s + 1s = 2 seconds total after the BS check
+        yield return new WaitForSeconds(1f);
         NextTurn();
     }
 
@@ -544,6 +590,7 @@ public class PlayCards : MonoBehaviour
 
             discardedCards.AddRange(selectedCards);
             selectedCards = new List<int> {};
+            cardCount.GetComponent<Text>().text = $"{selectedCards.Count} CARDS SELECTED";
 
             Debug.Log("Char 1 turn");
 
@@ -578,6 +625,19 @@ public class PlayCards : MonoBehaviour
             
             UpdateFriendCounts();
 
+            dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 1)";
+
+            if (selectedCards.Count == 1)
+            {
+                dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}!";   
+            } else if (selectedCards.Count > 1 && turn % 13 == 5) 
+            {
+                dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}es!";   
+            } else if (selectedCards.Count > 1)
+            {
+                dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}s!";   
+            }
+
             turnInProgress = true;
         }
     }
@@ -591,6 +651,7 @@ public class PlayCards : MonoBehaviour
 
             discardedCards.AddRange(selectedCards);
             selectedCards = new List<int> {};
+            cardCount.GetComponent<Text>().text = $"{selectedCards.Count} CARDS SELECTED";
 
             Debug.Log("Char 2 turn");   
 
@@ -664,6 +725,19 @@ public class PlayCards : MonoBehaviour
             
             UpdateFriendCounts();
 
+            dialogueSpeaker.GetComponent<Text>().text = "!^)^&!#)# (Friend 2)";
+
+            if (selectedCards.Count == 1)
+            {
+                dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}!";   
+            } else if (selectedCards.Count > 1 && turn % 13 == 5) 
+            {
+                dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}es!";   
+            } else if (selectedCards.Count > 1)
+            {
+                dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}s!";   
+            }
+
             turnInProgress = true;
         }
 
@@ -678,6 +752,7 @@ public class PlayCards : MonoBehaviour
 
             discardedCards.AddRange(selectedCards);
             selectedCards = new List<int> {};
+            cardCount.GetComponent<Text>().text = $"{selectedCards.Count} CARDS SELECTED";
 
             Debug.Log("Char 3 turn");   
             
@@ -712,6 +787,19 @@ public class PlayCards : MonoBehaviour
 
             UpdateFriendCounts();
 
+            dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 3)";
+
+            if (selectedCards.Count == 1)
+            {
+                dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}!";   
+            } else if (selectedCards.Count > 1 && turn % 13 == 5) 
+            {
+                dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}es!";   
+            } else if (selectedCards.Count > 1)
+            {
+                dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}s!";   
+            }
+
             turnInProgress = true;
         }
 
@@ -737,6 +825,7 @@ public class PlayCards : MonoBehaviour
         ClearCards();
 
         selectedCards = new List<int> {};
+        cardCount.GetComponent<Text>().text = $"{selectedCards.Count} CARDS SELECTED";
 
         if (turn % NUM_PLAYERS != 3) 
         {
@@ -746,6 +835,9 @@ public class PlayCards : MonoBehaviour
         {
             turnInProgress = true;
             Debug.Log("Player 1 Turn");
+
+            dialogueSpeaker.GetComponent<Text>().text = "You";
+            dialogueText.GetComponent<Text>().text = $"What should I play?";  
         }
 
         if (turn % NUM_PLAYERS == 0 & playerOneCards.Count() == 0)
@@ -883,6 +975,7 @@ public class PlayCards : MonoBehaviour
         }
 
         selectedCards = new List<int> {};
+        cardCount.GetComponent<Text>().text = $"{selectedCards.Count} CARDS SELECTED";
 
         for (int i = discardedCardsContainer.transform.childCount - 1; i >= 0; i--)
         {

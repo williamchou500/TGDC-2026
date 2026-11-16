@@ -999,6 +999,8 @@ MonoBehaviour:
   - {fileID: -1783808350427418317, guid: d2978ee4520fdd94e8499c21de18e3ab, type: 3}
   - {fileID: 281652535026622303, guid: 7b6f718325f036444ba5ce4586873d04, type: 3}
   cardTypes: 
+  dialogueSpeaker: {fileID: 1165161009}
+  dialogueText: {fileID: 1318517393}
   friendOneCount: {fileID: 2013717962}
   friendTwoCount: {fileID: 911012325}
   friendThreeCount: {fileID: 1151365671}
@@ -2536,7 +2538,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: I AM THE SPEAKER
+  m_Text: You
 --- !u!222 &1165161012
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3258,7 +3260,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: NAH THAT'S BULLLLLL
+  m_Text: What should I play?
 --- !u!222 &1318517396
 CanvasRenderer:
   m_ObjectHideFlags: 0
