@@ -737,7 +737,7 @@ public class PlayCards : MonoBehaviour
                         }
                     }
                     // 10% chance of playing 3 cards
-                    else if (willAddAnotherCard < 0.1)
+                    else if (willAddAnotherCard >= 0.05 & willAddAnotherCard < 0.15)
                     {
                         for (int i = validDiscards.Count; i <= 3; i++)
                         {
@@ -745,7 +745,7 @@ public class PlayCards : MonoBehaviour
                         }
                     }
                     // 20% chance of playing 2 cards
-                    else if (willAddAnotherCard < 0.3)
+                    else if (willAddAnotherCard >= 0.15 & willAddAnotherCard < 0.35)
                     {
                         for (int i = validDiscards.Count; i <= 2; i++)
                         {
@@ -860,7 +860,7 @@ public class PlayCards : MonoBehaviour
                                 }
                             }
                             // 10% chance of playing 3 cards
-                            else if (willAddAnotherCard < 0.1)
+                            else if (willAddAnotherCard >= 0.05 & willAddAnotherCard < 0.15)
                             {
                                 for (int i = validDiscards.Count; i <= 3; i++)
                                 {
@@ -868,7 +868,7 @@ public class PlayCards : MonoBehaviour
                                 }
                             }
                             // 20% chance of playing 2 cards
-                            else if (willAddAnotherCard < 0.3)
+                            else if (willAddAnotherCard >= 0.15 & willAddAnotherCard < 0.35)
                             {
                                 for (int i = validDiscards.Count; i <= 2; i++)
                                 {
