@@ -467,6 +467,35 @@ public class PlayCards : MonoBehaviour
             if (numOfType + selectedCards.Count() > 4)
             {
                 return true;
+            } 
+
+            if (UnityEngine.Random.value < 0.5)
+            {
+                if (numOfType + selectedCards.Count() > 3)
+                {
+                    if (UnityEngine.Random.value < 0.8)
+                    {
+                        return true;
+                    }
+                } else if (numOfType + selectedCards.Count() > 2)
+                {
+                    if (UnityEngine.Random.value < 0.6)
+                    {
+                        return true;
+                    }
+                } else if (numOfType + selectedCards.Count() > 1)
+                {
+                    if (UnityEngine.Random.value < 0.3)
+                    {
+                        return true;
+                    }
+                } else
+                {
+                    if (UnityEngine.Random.value < 0.1)
+                    {
+                        return true;
+                    }
+                }
             }
         }
 
@@ -776,22 +805,84 @@ public class PlayCards : MonoBehaviour
                 }
             }
 
-            if (validDiscards.Count() > 0)
+            if (UnityEngine.Random.value < 0.5)
             {
-                discardedCards.AddRange(validDiscards);
-                selectedCards.AddRange(validDiscards);
-
-                for (int i = 0; i < validDiscards.Count(); i++)
+                if (validDiscards.Count() > 0)
                 {
-                    newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
-                    newCard.name = cardNames[validDiscards[i]].ToString();
-                    newCard.tag = validDiscards[i].ToString();       
+                    discardedCards.AddRange(validDiscards);
+                    selectedCards.AddRange(validDiscards);
 
-                    newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
-                }        
-            } else
-            {
-                PlayRandomCard(playerFourCards);
+                    for (int i = 0; i < validDiscards.Count(); i++)
+                    {
+                        newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+                        newCard.name = cardNames[validDiscards[i]].ToString();
+                        newCard.tag = validDiscards[i].ToString();       
+
+                        newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
+                    }        
+                } else
+                {
+                    PlayRandomCard(playerFourCards);
+                }
+                } else
+                {
+                    if (validDiscards.Count() > 0)
+                    {
+                        double willBS = UnityEngine.Random.value;
+                        // 80% chance of playing valid cards
+                        if (willBS < 0.8)
+                        {
+                            discardedCards.AddRange(validDiscards);
+                            selectedCards.AddRange(validDiscards);
+                            foreach (int card in validDiscards)
+                            {
+                                playerThreeCards.Remove(card);
+                            }
+
+                            // 5% of playing 4 cards
+                            double willAddAnotherCard = UnityEngine.Random.value;
+                            if (willAddAnotherCard < 0.05)
+                            {
+                                for (int i = validDiscards.Count; i <= 4; i++)
+                                {
+                                    SelectRandomCard(playerThreeCards);
+                                }
+                            }
+                            // 10% chance of playing 3 cards
+                            else if (willAddAnotherCard < 0.1)
+                            {
+                                for (int i = validDiscards.Count; i <= 3; i++)
+                                {
+                                    SelectRandomCard(playerThreeCards);
+                                }
+                            }
+                            // 20% chance of playing 2 cards
+                            else if (willAddAnotherCard < 0.3)
+                            {
+                                for (int i = validDiscards.Count; i <= 2; i++)
+                                {
+                                    SelectRandomCard(playerThreeCards);
+                                }
+                            }
+                            for (int i = 0; i < selectedCards.Count(); i++)
+                            {
+                                newCard = Instantiate(cardPrefab, discardedCardsContainer.transform);
+                                newCard.name = cardNames[selectedCards[i]].ToString();
+                                newCard.tag = selectedCards[i].ToString();       
+
+                                newCard.GetComponent<UnityEngine.UI.Image>().sprite = cardBack;
+                            }
+                        } 
+                        else
+                        {
+                            PlayRandomCard(playerThreeCards);
+                        }
+                    } 
+                    // 20% chance of BS
+                    else
+                    {
+                        PlayRandomCard(playerThreeCards);
+                    }
             }
 
             UpdateFriendCounts();
