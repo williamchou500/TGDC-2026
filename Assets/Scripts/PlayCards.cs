@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Collections;
+using NUnit.Framework;
 
 public class PlayCards : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class PlayCards : MonoBehaviour
     private GameObject playerTwoHand;
     private GameObject playerThreeHand;
     private GameObject playerFourHand;
-    private bool resolvingTurn;
     public List<int> selectedCards;
     private GameObject selectedCardsContainer;
     public SwitchScreens sceneChanger;
@@ -156,7 +156,6 @@ public class PlayCards : MonoBehaviour
 
     public void LoadCards()
     {
-        resolvingTurn = false;
         turnInProgress = false;
 
         for (int i = playerOneHand.transform.childCount - 1; i >= 0; i--)
@@ -296,14 +295,12 @@ public class PlayCards : MonoBehaviour
     public void CallBullButton()
     {
         if (!turnInProgress || turn % NUM_PLAYERS == 0 || pause.activeInHierarchy || notebook.activeInHierarchy) return;
-        resolvingTurn = true;
         CallBull(true);
     }
 
     public void PassButton()
     {
         if (!turnInProgress || turn % NUM_PLAYERS == 0 || pause.activeInHierarchy || notebook.activeInHierarchy) return;
-        resolvingTurn = true;
 
         if (turn % NUM_PLAYERS == 1)
         {
@@ -533,8 +530,7 @@ public class PlayCards : MonoBehaviour
 
     public void Player1PlayCards()
     {
-        if (turn % NUM_PLAYERS != 0 || resolvingTurn) return;
-        resolvingTurn = true;
+        if (turn % NUM_PLAYERS != 0) return;
 
         Debug.Log("Player1PlayCards called. Turn = " + turn);
         Debug.Log("Turn modulo = " + turn % NUM_PLAYERS);
@@ -634,6 +630,9 @@ public class PlayCards : MonoBehaviour
     {
         if (!turnInProgress)
         {
+            bool isBull = false;
+            List<String> extraActions = new List<String> {"1", "2", "3", "4"};
+            String tell = "5";
             ClearCards();
 
             discardedCards.AddRange(selectedCards);
@@ -668,12 +667,15 @@ public class PlayCards : MonoBehaviour
                 }        
             } else
             {
+                isBull = true;
                 PlayRandomCard(playerTwoCards);
             }
             
             UpdateFriendCounts();
 
             dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 1)";
+
+            int randomIndex = UnityEngine.Random.Range(0, extraActions.Count);
 
             if (selectedCards.Count == 1)
             {
@@ -686,6 +688,14 @@ public class PlayCards : MonoBehaviour
                 dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}s!";   
             }
 
+            if (isBull)
+            {
+                dialogueText.GetComponent<Text>().text += tell;
+            } else
+            {
+                dialogueText.GetComponent<Text>().text += extraActions[randomIndex];
+            }
+
             turnInProgress = true;
         }
     }
@@ -695,6 +705,9 @@ public class PlayCards : MonoBehaviour
     {
         if (!turnInProgress)
         {
+            bool isBull = false;
+            List<String> extraActions = new List<String> {"1", "2", "3", "4"};
+            String tell = "5";
             ClearCards();
 
             discardedCards.AddRange(selectedCards);
@@ -768,12 +781,15 @@ public class PlayCards : MonoBehaviour
             // 20% chance of BS
             else
             {
+                isBull = true;
                 PlayRandomCard(playerThreeCards);
             }
             
             UpdateFriendCounts();
 
             dialogueSpeaker.GetComponent<Text>().text = "!^)^&!#)# (Friend 2)";
+
+            int randomIndex = UnityEngine.Random.Range(0, extraActions.Count);
 
             if (selectedCards.Count == 1)
             {
@@ -786,6 +802,14 @@ public class PlayCards : MonoBehaviour
                 dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}s!";   
             }
 
+            if (isBull)
+            {
+                dialogueText.GetComponent<Text>().text += tell;
+            } else
+            {
+                dialogueText.GetComponent<Text>().text += extraActions[randomIndex];
+            }
+
             turnInProgress = true;
         }
 
@@ -796,6 +820,9 @@ public class PlayCards : MonoBehaviour
     {
         if (!turnInProgress)
         {
+            bool isBull = false;
+            List<String> extraActions = new List<String> {"1", "2", "3", "4"};
+            String tell = "5";
             ClearCards();
 
             discardedCards.AddRange(selectedCards);
@@ -832,6 +859,7 @@ public class PlayCards : MonoBehaviour
                     }        
                 } else
                 {
+                    isBull = true;
                     PlayRandomCard(playerFourCards);
                 }
                 } else
@@ -891,6 +919,7 @@ public class PlayCards : MonoBehaviour
                     // 20% chance of BS
                     else
                     {
+                        isBull = true;
                         PlayRandomCard(playerThreeCards);
                     }
             }
@@ -898,6 +927,8 @@ public class PlayCards : MonoBehaviour
             UpdateFriendCounts();
 
             dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 3)";
+
+            int randomIndex = UnityEngine.Random.Range(0, extraActions.Count);
 
             if (selectedCards.Count == 1)
             {
@@ -908,6 +939,14 @@ public class PlayCards : MonoBehaviour
             } else if (selectedCards.Count > 1)
             {
                 dialogueText.GetComponent<Text>().text = $"{selectedCards.Count} {cardNameTypes[turn % 13]}s!";   
+            }
+
+            if (isBull)
+            {
+                dialogueText.GetComponent<Text>().text += tell;
+            } else
+            {
+                dialogueText.GetComponent<Text>().text += extraActions[randomIndex];
             }
 
             turnInProgress = true;
@@ -932,7 +971,6 @@ public class PlayCards : MonoBehaviour
 
     public void NextTurn()
     {
-        resolvingTurn = true;
         ClearCards();
 
         selectedCards = new List<int> {};
