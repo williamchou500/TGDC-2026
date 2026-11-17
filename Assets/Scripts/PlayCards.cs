@@ -744,7 +744,7 @@ public class PlayCards : MonoBehaviour
                     if (willAddAnotherCard < 0.05)
                     {
                         isBull = true;
-                        for (int i = validDiscards.Count; i <= 4; i++)
+                        for (int i = validDiscards.Count; i < 4; i++)
                         {
                             SelectRandomCard(playerThreeCards);
                         }
@@ -753,7 +753,7 @@ public class PlayCards : MonoBehaviour
                     else if (willAddAnotherCard >= 0.05 & willAddAnotherCard < 0.15)
                     {
                         isBull = true;
-                        for (int i = validDiscards.Count; i <= 3; i++)
+                        for (int i = validDiscards.Count; i < 3; i++)
                         {
                             SelectRandomCard(playerThreeCards);
                         }
@@ -762,7 +762,7 @@ public class PlayCards : MonoBehaviour
                     else if (willAddAnotherCard >= 0.15 & willAddAnotherCard < 0.35)
                     {
                         isBull = true;
-                        for (int i = validDiscards.Count; i <= 2; i++)
+                        for (int i = validDiscards.Count; i < 2; i++)
                         {
                             SelectRandomCard(playerThreeCards);
                         }
@@ -886,7 +886,7 @@ public class PlayCards : MonoBehaviour
                             if (willAddAnotherCard < 0.05)
                             {
                                 isBull = true;
-                                for (int i = validDiscards.Count; i <= 4; i++)
+                                for (int i = validDiscards.Count; i < 4; i++)
                                 {
                                     SelectRandomCard(playerThreeCards);
                                 }
@@ -895,7 +895,7 @@ public class PlayCards : MonoBehaviour
                             else if (willAddAnotherCard >= 0.05 & willAddAnotherCard < 0.15)
                             {
                                 isBull = true;
-                                for (int i = validDiscards.Count; i <= 3; i++)
+                                for (int i = validDiscards.Count; i < 3; i++)
                                 {
                                     SelectRandomCard(playerThreeCards);
                                 }
@@ -904,7 +904,7 @@ public class PlayCards : MonoBehaviour
                             else if (willAddAnotherCard >= 0.15 & willAddAnotherCard < 0.35)
                             {
                                 isBull = true;
-                                for (int i = validDiscards.Count; i <= 2; i++)
+                                for (int i = validDiscards.Count; i < 2; i++)
                                 {
                                     SelectRandomCard(playerThreeCards);
                                 }
