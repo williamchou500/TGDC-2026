@@ -632,8 +632,8 @@ public class PlayCards : MonoBehaviour
         if (!turnInProgress)
         {
             bool isBull = false;
-            List<String> extraActions = new List<String> {" I uh...pass?", " Um...whose go", " No reason to l-lie.",
-                                                          " Anyone want to...check?", " Yea, that should be--yep, that's what I have",
+            List<String> extraActions = new List<String> {" I uh...pass?", " Um...whose go?", " No reason to l-lie.",
+                                                          " Anyone want to...check?", " Yea, that should be--yep, that's what I have.",
                                                           " That's um, that's all, pass"};
             List<String> tells = new List<String> {" That's, hehe, that's all?", " Please god...", " Pass."};
             ClearCards();
@@ -711,7 +711,7 @@ public class PlayCards : MonoBehaviour
         {
             bool isBull = false;
             List<String> extraActions = new List<String> {" C’mon, call bullshit, I dare you.", " Bet you wish I didn’t have this.", 
-                                                          " Oh, I’m gonna survive this, one way or another.", " I ain’t dying here. ", 
+                                                          " Oh, I’m gonna survive this, one way or another.", " I ain’t dying here.", 
                                                           " Anyone wanna give me a try?", " I have a feeling who's lying here."};
             List<String> tells = new List<String> {" C’mon, c’mon!", " Fucking try bullshitting me; I dare you.", " This is just...ridiculous"};
             ClearCards();
@@ -834,9 +834,9 @@ public class PlayCards : MonoBehaviour
             bool isBull = false;
             List<String> extraActions = new List<String> {" Who would dare threaten the resolve of a threatened animal?", 
                                                           " Trapped, alone, and pitted against each other, how to trust?", 
-                                                          " ...anyone?", " This is all, if everyone allows it?, ", 
+                                                          " ...anyone?", " This is all, if everyone allows it?", 
                                                           " Does anyone wish to call lies here?", " Any objections?"};
-            List <String> tells = new List<String> {" It be what it be.", " Who could ever shake our will? ", 
+            List <String> tells = new List<String> {" It be what it be.", " Who could ever shake our will?", 
                                                     " A friendship can never be shaken, do you agree?"};
             ClearCards();
 
