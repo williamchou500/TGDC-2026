@@ -1800,6 +1800,7 @@ MonoBehaviour:
   cardTypes: 
   dialogueSpeaker: {fileID: 1165161009}
   dialogueText: {fileID: 1318517393}
+  dialogueKiller: {fileID: 1654573348}
   friendCounts: {fileID: 2013717962}
   notebook: {fileID: 265528439}
   pause: {fileID: 2126885821}

@@ -26,6 +26,7 @@ public class PlayCards : MonoBehaviour
     private GameObject discardedCardsContainer;
     public GameObject dialogueSpeaker;
     public GameObject dialogueText;
+    public GameObject dialogueKiller;
     public GameObject friendCounts;
     private GameObject newCard;
     public GameObject notebook;
@@ -241,6 +242,12 @@ public class PlayCards : MonoBehaviour
 
     public bool CallBull(bool PlayerOneCalled = false)
     {
+        List<String> killerBullDialogue = new List<String> {"How exciting!", "Who will survive this one!", "Is there really a rat amongst us?", 
+                                                            "How sneaky, I would have missed that!", "Brave, but stupid. I wonder if this will pay off!", 
+                                                            "Oh, they will so die if you are right.", "Haha, I can’t wait to kill the person who's wrong here."};
+        int randomIndex = UnityEngine.Random.Range(0, killerBullDialogue.Count);
+        dialogueKiller.GetComponent<Text>().text = killerBullDialogue[randomIndex];
+
         // this just checks if the discard tiles are bull or not
         // we can probably make this return true or false and the use the turn number to find out who to punish
         if (PlayerOneCalled)
@@ -991,6 +998,11 @@ public class PlayCards : MonoBehaviour
 
     public void NextTurn()
     {
+        List<String> killerDialogue = new List<String> {"Confidence or deceit?", "Oho, I like their spirits.", "What a mean poker face.", "Are you really just gonna let them go just like that?", 
+                                                        "Curious, curious.", "Can we trust this one?", "Oh, c’mon, someone just call it.", "Oh, do I see a smile?", "The trap is ticking; you gotta do something here."};
+        int randomIndex = UnityEngine.Random.Range(0, killerDialogue.Count);
+        dialogueKiller.GetComponent<Text>().text = killerDialogue[randomIndex];
+
         ClearCards();
 
         selectedCards = new List<int> {};
