@@ -106,6 +106,11 @@ public class PlayCards : MonoBehaviour
         
         turnContainer.GetComponent<Text>().text = $"Round {turn + 1} / Your Turn";
 
+        List<String> killerDialogue = new List<String> {"Confidence or deceit?", "Oho, I like their spirits.", "What a mean poker face.", "Are you really just gonna let them go just like that?", 
+                                                        "Curious, curious.", "Can we trust this one?", "Oh, c’mon, someone just call it.", "Oh, do I see a smile?", "The trap is ticking; you gotta do something here."};
+        int randomIndex = UnityEngine.Random.Range(0, killerDialogue.Count);
+        dialogueKiller.GetComponent<Text>().text = killerDialogue[randomIndex];
+
         LoadCards();
     }
 
