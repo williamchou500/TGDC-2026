@@ -19,9 +19,6 @@ public class NotesScript : MonoBehaviour
         {
             Debug.Log("pressed n");
             showNotes();
-        } else if (Keyboard.current.nKey.wasPressedThisFrame & notesPanel.activeInHierarchy)
-        {
-            hideNotes();
         }
     }
 
