@@ -6699,6 +6699,7 @@ MonoBehaviour:
   audioSource: {fileID: 519420033}
   bullshitOne: {fileID: 8300000, guid: 22e68526c08d3f345ba4105556c66fea, type: 3}
   bullshitTwo: {fileID: 8300000, guid: ce3b9d5ca774d4a49905c258131667a3, type: 3}
+  bullshitThree: {fileID: 8300000, guid: 7d605fdba8cf4c848a4ee1929e079a0f, type: 3}
 --- !u!1 &1654573348
 GameObject:
   m_ObjectHideFlags: 0
