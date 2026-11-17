@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 
 public class PlayCards : MonoBehaviour
 {
+    public Audio audioScript;
     public Sprite cardBack;
     private GameObject cardCount;
     private List<int> cardIDs;
@@ -257,6 +258,7 @@ public class PlayCards : MonoBehaviour
         // we can probably make this return true or false and the use the turn number to find out who to punish
         if (PlayerOneCalled)
         {
+            audioScript.PlayOne();
             dialogueSpeaker.GetComponent<Text>().text = "You";
             dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
         }
@@ -321,6 +323,7 @@ public class PlayCards : MonoBehaviour
             {
                 dialogueSpeaker.GetComponent<Text>().text = "!^)^&!#)# (Friend 2)";
                 dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
+                audioScript.PlayOne();
                 if (CallBull())
                 {
                     Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
@@ -332,6 +335,7 @@ public class PlayCards : MonoBehaviour
                 }
             } else if (MakeDecision(3))
             {
+                audioScript.PlayTwo();
                 dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 3)";
                 dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
@@ -348,6 +352,7 @@ public class PlayCards : MonoBehaviour
         {
             if (MakeDecision(3))
             {
+                audioScript.PlayTwo();
                 dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 3)";
                 dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
@@ -361,6 +366,7 @@ public class PlayCards : MonoBehaviour
                 }
             } else if (MakeDecision(1))
             {
+                audioScript.PlayOne();
                 dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 1)";
                 dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
@@ -377,6 +383,7 @@ public class PlayCards : MonoBehaviour
         {
             if (MakeDecision(1))
             {
+                audioScript.PlayOne();
                 dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 1)";
                 dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
@@ -390,6 +397,7 @@ public class PlayCards : MonoBehaviour
                 }
             } else if (MakeDecision(2))
             {
+                audioScript.PlayOne();
                 dialogueSpeaker.GetComponent<Text>().text = "!^)^&!#)# (Friend 2)";
                 dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
                 if (CallBull())
@@ -590,6 +598,7 @@ public class PlayCards : MonoBehaviour
         {
             dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 1)";
             dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
+            audioScript.PlayOne();
             if (CallBull())
             {
                 Debug.Log("PLAYER 2 CALLED BS AND WAS RiGHT");
@@ -605,6 +614,7 @@ public class PlayCards : MonoBehaviour
         {
             dialogueSpeaker.GetComponent<Text>().text = "!^)^&!#)# (Friend 2)";
             dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
+            audioScript.PlayOne();
             if (CallBull())
             {
                 Debug.Log("PLAYER 3 CALLED BS AND WAS RiGHT");
@@ -620,6 +630,7 @@ public class PlayCards : MonoBehaviour
         {
             dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 3)";
             dialogueText.GetComponent<Text>().text = $"BULLSHIT!"; 
+            audioScript.PlayTwo();
             if (CallBull())
             {
                 Debug.Log("PLAYER 4 CALLED BS AND WAS RiGHT");
