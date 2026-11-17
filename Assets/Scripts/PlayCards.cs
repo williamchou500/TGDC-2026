@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Collections;
 using NUnit.Framework;
+using Unity.VisualScripting;
 
 public class PlayCards : MonoBehaviour
 {
@@ -632,7 +633,7 @@ public class PlayCards : MonoBehaviour
         {
             bool isBull = false;
             List<String> extraActions = new List<String> {"1", "2", "3", "4"};
-            String tell = "5";
+            List<String> tells = new List<String> {"5", "6"};
             ClearCards();
 
             discardedCards.AddRange(selectedCards);
@@ -676,6 +677,7 @@ public class PlayCards : MonoBehaviour
             dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 1)";
 
             int randomIndex = UnityEngine.Random.Range(0, extraActions.Count);
+            int randomIndexBull = UnityEngine.Random.Range(0, tells.Count);
 
             if (selectedCards.Count == 1)
             {
@@ -690,7 +692,7 @@ public class PlayCards : MonoBehaviour
 
             if (isBull)
             {
-                dialogueText.GetComponent<Text>().text += tell;
+                dialogueText.GetComponent<Text>().text += tells[randomIndexBull];
             } else
             {
                 dialogueText.GetComponent<Text>().text += extraActions[randomIndex];
@@ -707,7 +709,7 @@ public class PlayCards : MonoBehaviour
         {
             bool isBull = false;
             List<String> extraActions = new List<String> {"1", "2", "3", "4"};
-            String tell = "5";
+            List<String> tells = new List<String> {"5", "6"};
             ClearCards();
 
             discardedCards.AddRange(selectedCards);
@@ -794,6 +796,7 @@ public class PlayCards : MonoBehaviour
             dialogueSpeaker.GetComponent<Text>().text = "!^)^&!#)# (Friend 2)";
 
             int randomIndex = UnityEngine.Random.Range(0, extraActions.Count);
+            int randomIndexBull = UnityEngine.Random.Range(0, tells.Count);
 
             if (selectedCards.Count == 1)
             {
@@ -808,7 +811,7 @@ public class PlayCards : MonoBehaviour
 
             if (isBull)
             {
-                dialogueText.GetComponent<Text>().text += tell;
+                dialogueText.GetComponent<Text>().text += tells[randomIndexBull];
             } else
             {
                 dialogueText.GetComponent<Text>().text += extraActions[randomIndex];
@@ -826,7 +829,7 @@ public class PlayCards : MonoBehaviour
         {
             bool isBull = false;
             List<String> extraActions = new List<String> {"1", "2", "3", "4"};
-            String tell = "5";
+            List <String> tells = new List<String> {"5", "6"};
             ClearCards();
 
             discardedCards.AddRange(selectedCards);
@@ -937,6 +940,7 @@ public class PlayCards : MonoBehaviour
             dialogueSpeaker.GetComponent<Text>().text = "%^&@#* (Friend 3)";
 
             int randomIndex = UnityEngine.Random.Range(0, extraActions.Count);
+            int randomIndexBull = UnityEngine.Random.Range(0, tells.Count);
 
             if (selectedCards.Count == 1)
             {
@@ -951,7 +955,7 @@ public class PlayCards : MonoBehaviour
 
             if (isBull)
             {
-                dialogueText.GetComponent<Text>().text += tell;
+                dialogueText.GetComponent<Text>().text += tells[randomIndexBull];
             } else
             {
                 dialogueText.GetComponent<Text>().text += extraActions[randomIndex];
