@@ -832,8 +832,12 @@ public class PlayCards : MonoBehaviour
         if (!turnInProgress)
         {
             bool isBull = false;
-            List<String> extraActions = new List<String> {" It be what it be.", " ", "3", "4"};
-            List <String> tells = new List<String> {"5", "6"};
+            List<String> extraActions = new List<String> {" Who would dare threaten the resolve of a threatened animal?", 
+                                                          " Trapped, alone, and pitted against each other, how to trust?", 
+                                                          " ...anyone?", " This is all, if everyone allows it?, ", 
+                                                          " Does anyone wish to call lies here?", " Any objections?"};
+            List <String> tells = new List<String> {" It be what it be.", " Who could ever shake our will? ", 
+                                                    " A friendship can never be shaken, do you agree?"};
             ClearCards();
 
             discardedCards.AddRange(selectedCards);
